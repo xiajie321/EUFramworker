@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "5nsLBZHYqi/r+fiLBhISYApXdT9pSmU8CqUi4gRDAYEL4QGDZsMdID/Rv+Nt34PWX9tVSBU4QkoCy6p0htUFqA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Java\\Luban.Java.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\caiJH\\.nuget\\packages\\nlog\\5.2.2\\nlog.5.2.2.nupkg.sha512",
+    "C:\\Users\\caiJH\\.nuget\\packages\\scriban\\5.7.0\\scriban.5.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}

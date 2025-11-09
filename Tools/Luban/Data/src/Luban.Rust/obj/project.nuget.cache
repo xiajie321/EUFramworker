@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "59SaZjDtB9qcniKNPEvnVJfunGblzlkQ0hxMhz2yOC607nGLTjHTUJOBykqFxvczl9SZU/xl7zJeEKaG+68Bjg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Rust\\Luban.Rust.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\caiJH\\.nuget\\packages\\nlog\\5.2.2\\nlog.5.2.2.nupkg.sha512",
+    "C:\\Users\\caiJH\\.nuget\\packages\\scriban\\5.7.0\\scriban.5.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}

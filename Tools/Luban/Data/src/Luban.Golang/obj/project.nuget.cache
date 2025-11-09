@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "Kpd5MJE04C17kW6OnYbwSvcZfTLpagqgD5FtAXA7GIvpYJsVS/aqc6BenxAqjJFsjIjnO+9SG/2QPTIc6iwBHw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Golang\\Luban.Golang.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\caiJH\\.nuget\\packages\\nlog\\5.2.2\\nlog.5.2.2.nupkg.sha512",
+    "C:\\Users\\caiJH\\.nuget\\packages\\scriban\\5.7.0\\scriban.5.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "DnA6YvCdH0/M+S8jUOzVg9rlOlS97dWiL4czyVkMvLnROnARqdISv8Y5NAvG5cJDE+CXpFZQBH8z0yo9IUcLpQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataValidator.Builtin\\Luban.DataValidator.Builtin.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\caiJH\\.nuget\\packages\\nlog\\5.2.2\\nlog.5.2.2.nupkg.sha512",
+    "C:\\Users\\caiJH\\.nuget\\packages\\scriban\\5.7.0\\scriban.5.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}

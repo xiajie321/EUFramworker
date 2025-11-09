@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "LiaHcGDsZxbpXVquPzJggb8UVGIoOyh+4PnU+GU9EGUUJ4BYzwNLzI6mCEPfLtK5p5Rs7Y8tSZtMpeULI6FbPA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Lua\\Luban.Lua.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\caiJH\\.nuget\\packages\\nlog\\5.2.2\\nlog.5.2.2.nupkg.sha512",
+    "C:\\Users\\caiJH\\.nuget\\packages\\scriban\\5.7.0\\scriban.5.7.0.nupkg.sha512"
+  ],
+  "logs": []
+}

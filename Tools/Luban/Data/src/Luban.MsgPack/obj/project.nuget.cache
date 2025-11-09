@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "phyEcWOTnekMatPLHe07e5/on65Uh4iMfNw92l2nT8yrKqHQlv1LpzWdSNJhTiMGBpwCAT/5f2eWrNYNECwJag==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.MsgPack\\Luban.MsgPack.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\caiJH\\.nuget\\packages\\messagepack\\2.6.100-alpha\\messagepack.2.6.100-alpha.nupkg.sha512",
+    "C:\\Users\\caiJH\\.nuget\\packages\\messagepack.annotations\\2.6.100-alpha\\messagepack.annotations.2.6.100-alpha.nupkg.sha512",
+    "C:\\Users\\caiJH\\.nuget\\packages\\microsoft.net.stringtools\\17.4.0\\microsoft.net.stringtools.17.4.0.nupkg.sha512",
+    "C:\\Users\\caiJH\\.nuget\\packages\\nlog\\5.2.2\\nlog.5.2.2.nupkg.sha512",
+    "C:\\Users\\caiJH\\.nuget\\packages\\scriban\\5.7.0\\scriban.5.7.0.nupkg.sha512",
+    "C:\\Users\\caiJH\\.nuget\\packages\\system.memory\\4.5.5\\system.memory.4.5.5.nupkg.sha512",
+    "C:\\Users\\caiJH\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

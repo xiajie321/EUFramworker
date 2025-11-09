@@ -1,0 +1,405 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Typescript\\Luban.Typescript.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Core\\Luban.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Core\\Luban.Core.csproj",
+        "projectName": "Luban.Core",
+        "projectPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Core\\Luban.Core.csproj",
+        "packagesPath": "C:\\Users\\caiJH\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\NuGet.Config",
+          "C:\\Users\\caiJH\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "NLog": {
+              "target": "Package",
+              "version": "[5.2.2, )"
+            },
+            "Scriban": {
+              "target": "Package",
+              "version": "[5.7.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.CSharp\\Luban.CSharp.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.CSharp\\Luban.CSharp.csproj",
+        "projectName": "Luban.CSharp",
+        "projectPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.CSharp\\Luban.CSharp.csproj",
+        "packagesPath": "C:\\Users\\caiJH\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.CSharp\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\NuGet.Config",
+          "C:\\Users\\caiJH\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Core\\Luban.Core.csproj": {
+                "projectPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Core\\Luban.Core.csproj",
+                "excludeAssets": "runtime"
+              },
+              "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataValidator.Builtin\\Luban.DataValidator.Builtin.csproj": {
+                "projectPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataValidator.Builtin\\Luban.DataValidator.Builtin.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "NLog": {
+              "include": "Compile, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[5.2.2, )"
+            },
+            "Scriban": {
+              "include": "Compile, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "target": "Package",
+              "version": "[5.7.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataLoader.Builtin\\Luban.DataLoader.Builtin.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataLoader.Builtin\\Luban.DataLoader.Builtin.csproj",
+        "projectName": "Luban.DataLoader.Builtin",
+        "projectPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataLoader.Builtin\\Luban.DataLoader.Builtin.csproj",
+        "packagesPath": "C:\\Users\\caiJH\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataLoader.Builtin\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\NuGet.Config",
+          "C:\\Users\\caiJH\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Core\\Luban.Core.csproj": {
+                "projectPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Core\\Luban.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "ExcelDataReader": {
+              "target": "Package",
+              "version": "[3.6.0, )"
+            },
+            "NeoLua": {
+              "target": "Package",
+              "version": "[1.3.14, )"
+            },
+            "Ude.NetStandard": {
+              "target": "Package",
+              "version": "[1.2.0, )"
+            },
+            "YamlDotNet.NetCore": {
+              "target": "Package",
+              "version": "[1.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataTarget.Builtin\\Luban.DataTarget.Builtin.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataTarget.Builtin\\Luban.DataTarget.Builtin.csproj",
+        "projectName": "Luban.DataTarget.Builtin",
+        "projectPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataTarget.Builtin\\Luban.DataTarget.Builtin.csproj",
+        "packagesPath": "C:\\Users\\caiJH\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataTarget.Builtin\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\NuGet.Config",
+          "C:\\Users\\caiJH\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Core\\Luban.Core.csproj": {
+                "projectPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Core\\Luban.Core.csproj"
+              },
+              "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataLoader.Builtin\\Luban.DataLoader.Builtin.csproj": {
+                "projectPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataLoader.Builtin\\Luban.DataLoader.Builtin.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataValidator.Builtin\\Luban.DataValidator.Builtin.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataValidator.Builtin\\Luban.DataValidator.Builtin.csproj",
+        "projectName": "Luban.DataValidator.Builtin",
+        "projectPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataValidator.Builtin\\Luban.DataValidator.Builtin.csproj",
+        "packagesPath": "C:\\Users\\caiJH\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataValidator.Builtin\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\NuGet.Config",
+          "C:\\Users\\caiJH\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Core\\Luban.Core.csproj": {
+                "projectPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Core\\Luban.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Typescript\\Luban.Typescript.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Typescript\\Luban.Typescript.csproj",
+        "projectName": "Luban.Typescript",
+        "projectPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Typescript\\Luban.Typescript.csproj",
+        "packagesPath": "C:\\Users\\caiJH\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Typescript\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\NuGet.Config",
+          "C:\\Users\\caiJH\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Core\\Luban.Core.csproj": {
+                "projectPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.Core\\Luban.Core.csproj"
+              },
+              "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.CSharp\\Luban.CSharp.csproj": {
+                "projectPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.CSharp\\Luban.CSharp.csproj"
+              },
+              "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataTarget.Builtin\\Luban.DataTarget.Builtin.csproj": {
+                "projectPath": "C:\\Users\\caiJH\\Desktop\\新建文件夹\\src\\Luban.DataTarget.Builtin\\Luban.DataTarget.Builtin.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
