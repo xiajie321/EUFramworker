@@ -18,6 +18,11 @@ public class DoubleTileToolTest : MonoBehaviour
                 DoubleTileTool.SetTile( new Vector3(-50+i, -50+j, 0), (TileType)0);
             }
         }
+        //注册瓦片改变的事件
+        DoubleTileTool.RegisterTileChangeEvent(v=>
+        {
+            Debug.Log($"执行{v.Position} {v.OldTileType} {v.NewTileType}");
+        });
     }
 
     void Update()
@@ -34,8 +39,5 @@ public class DoubleTileToolTest : MonoBehaviour
         {
             DoubleTileTool.ShowTagGrid(true);//显示标记
         }
-        
-        
-
     }
 }

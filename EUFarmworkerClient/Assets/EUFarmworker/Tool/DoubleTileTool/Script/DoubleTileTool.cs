@@ -12,7 +12,7 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
     {
         private static readonly Dictionary<Vector3Int,TileType> _tileData = new();
 
-        private static event Action<Vector3Int, TileType> _onTileChangeEvent;
+        private static event Action<TileChangeData> _onTileChangeEvent;
         public static Tilemap _tagGrid;
         public static Tilemap _viewGrid;
         static bool _showTagGrid;
@@ -62,6 +62,7 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
             }
             //这里要补充标记网格的显示逻辑
         }
+        private static TileChangeData _lsChangeData = new();
         /// <summary>
         /// 设置瓦片
         /// </summary>
@@ -70,14 +71,19 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
         public static void SetTile(Vector3 position,TileType tileType)
         {
             Vector3Int cellPosition = _tagGrid.WorldToCell(position);
+            _lsChangeData.Position =  cellPosition;
             if (!_tileData.ContainsKey(cellPosition))
             {
+                _lsChangeData.OldTileType = default;
+                _lsChangeData.NewTileType = tileType;
                 _tileData.Add(cellPosition,tileType);
                 TileChange(cellPosition,tileType);
                 return;
             }
             if(_tileData[cellPosition] == tileType)
                 return;
+            _lsChangeData.OldTileType = default;
+            _lsChangeData.NewTileType = tileType;
             _tileData[cellPosition] = tileType;
             TileChange(cellPosition,tileType);
         }
@@ -120,13 +126,13 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
             { 
                 _tagGrid.SetTile(position,GetTagTile(tileType));
             }
-            _onTileChangeEvent?.Invoke(position,tileType);
+            _onTileChangeEvent?.Invoke(_lsChangeData);
         }
         /// <summary>
         /// 注册瓦片改变事件
         /// </summary>
         /// <param name="action"></param>
-        public static void RegisterTileChangeEvent(Action<Vector3Int, TileType> action)
+        public static void RegisterTileChangeEvent(Action<TileChangeData> action)
         {
             _onTileChangeEvent += action;
         }
@@ -194,5 +200,12 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
             DoubleTileToolTileGenerate.Release();
             _tagTiles.Clear();
         }
+    }
+
+    public struct TileChangeData
+    {
+        public Vector3Int Position;
+        public TileType OldTileType;
+        public TileType NewTileType;
     }
 }
