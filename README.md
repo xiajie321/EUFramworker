@@ -10,6 +10,8 @@
 
 - 双层瓦片工具基础部分。
 
+- 引入Qframework核心部分(MVC分层)
+
 ## 正在进行的工作
 
 - 地图生成工具(区块生成)。
@@ -27,3 +29,5 @@
 - [YooAsset] [tuyoogame/YooAsset: unity3d resources management system](https://github.com/tuyoogame/YooAsset)
 
 - [HybridCLR][focus-creative-games/hybridclr： HybridCLR是一个特性完整、零成本、高性能、低内存的Unity全平台原生c#热更新解决方案。HybridCLR 是一种功能齐全、零成本、高性能、低内存的解决方案，适用于 Unity 的全平台原生 c# 热更新。](https://github.com/focus-creative-games/hybridclr)
+
+- [Qframework][liangxiegame/QFramework：Godot/Unity3D 系统设计架构](https://github.com/liangxiegame/QFramework)
