@@ -31,13 +31,26 @@ public class DoubleTileToolTest : MonoBehaviour
         {
             Vector3 ls = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             ls.z = 0;
-            DoubleTileTool.SetTile(ls,(TileType)1);//设置瓦片
+            DoubleTileTool.LoadTile(ls);//加载对应位置的瓦片
+            
+            // DoubleTileTool.SetTile(ls,(TileType)1);//设置瓦片
+            
             //Debug.Log(DoubleTileTool.GetTile(ls));//获取当前位置的瓦片信息
         }
 
         if (Input.GetMouseButtonDown(1))
         {
-            DoubleTileTool.ShowTagGrid(true);//显示标记
+            Vector3 ls = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            ls.z = 0;
+             DoubleTileTool.SetTile(ls,(TileType)1);//设置瓦片
+            //DoubleTileTool.ShowTagGrid(true);//显示标记
+        }
+
+        if (Input.GetMouseButtonDown(2))
+        {
+            Vector3 ls = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            ls.z = 0;
+            DoubleTileTool.UninstallTile(ls);//卸载对应位置的瓦片
         }
     }
 }

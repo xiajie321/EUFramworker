@@ -78,6 +78,7 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
                 _lsChangeData.NewTileType = tileType;
                 _tileData.Add(cellPosition,tileType);
                 TileChange(cellPosition,tileType);
+                _onTileChangeEvent?.Invoke(_lsChangeData);
                 return;
             }
             if(_tileData[cellPosition] == tileType)
@@ -86,6 +87,7 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
             _lsChangeData.NewTileType = tileType;
             _tileData[cellPosition] = tileType;
             TileChange(cellPosition,tileType);
+            _onTileChangeEvent?.Invoke(_lsChangeData);
         }
         private static readonly Dictionary<TileType,Tile> _tagTiles = new();
         /// <summary>
@@ -126,7 +128,6 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
             { 
                 _tagGrid.SetTile(position,GetTagTile(tileType));
             }
-            _onTileChangeEvent?.Invoke(_lsChangeData);
         }
         /// <summary>
         /// 注册瓦片改变事件
@@ -165,14 +166,34 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
             ls.Add(cellPosition + new Vector3Int(0,-1,0));
             return ls;
         }
-        public static void RemoveTile(Vector3 position)
+        /// <summary>
+        /// 渲染指定位置的瓦片
+        /// </summary>
+        /// <param name="position"></param>
+        public static void LoadTile(Vector3 position)
         {
             Vector3Int cellPosition = _tagGrid.WorldToCell(position);
-            if(!_tileData.ContainsKey(cellPosition)) return;
-            _tagGrid.SetTile(cellPosition,null);
-            _tileData.Remove(cellPosition);
+            if (_tileData.ContainsKey(cellPosition))
+            {
+                TileChange(cellPosition,_tileData[cellPosition]);
+                return;
+            }
+            TileChange(cellPosition,default);
         }
-        
+        /// <summary>
+        /// 卸载指定位置的瓦片
+        /// </summary>
+        /// <param name="position"></param>
+        public static void UninstallTile(Vector3 position)
+        {
+            Vector3Int cellPosition = _tagGrid.WorldToCell(position);
+            _tagGrid.SetTile(cellPosition,null);
+            foreach (var i in TagCellToViewCell(cellPosition))
+            {
+                if(_doubleTileViewConfig.ConfigData.TileObjectType == TileObjectType.Sprite)
+                    _viewGrid.SetTile(i+new Vector3Int(-1,-1,0),null);
+            }
+        }
         public static TileType GetTile(Vector3 position)
         {
             return _tileData.GetValueOrDefault(_tagGrid.WorldToCell(position));
