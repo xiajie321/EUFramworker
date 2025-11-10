@@ -26,7 +26,6 @@ namespace EUFarmworker.Tool.DoubleTileTool.EditorWindow
         public static void ShowExample()
         {
             DoubleTileToolEditorWindow wnd = GetWindow<DoubleTileToolEditorWindow>();
-            wnd.titleContent = new GUIContent("DoubleTileToolEditorWindow");
             wnd.minSize = new Vector2(1080, 720);
             wnd.maxSize = new Vector2(1080, 720);
             wnd.titleContent = new GUIContent("DoubleTileTool");
