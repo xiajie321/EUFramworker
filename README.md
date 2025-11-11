@@ -34,6 +34,8 @@
 
 ## 引用
 
+- [LuBan][focus-creative-games/luban： luban是一个强大、易用、优雅、稳定的游戏配置解决方案。鲁班是一款功能强大、易用、优雅稳定的游戏配置方案。](https://github.com/focus-creative-games/luban)
+
 - [YooAsset] [tuyoogame/YooAsset: unity3d resources management system](https://github.com/tuyoogame/YooAsset)
 
 - [HybridCLR][focus-creative-games/hybridclr： HybridCLR是一个特性完整、零成本、高性能、低内存的Unity全平台原生c#热更新解决方案。HybridCLR 是一种功能齐全、零成本、高性能、低内存的解决方案，适用于 Unity 的全平台原生 c# 热更新。](https://github.com/focus-creative-games/hybridclr)
