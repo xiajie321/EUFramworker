@@ -76,7 +76,7 @@ public class MapLoadEditorWindow : EditorWindow
         {
             _blockLoadView.style.display = DisplayStyle.Flex;
             _mapGenerateView.style.display = DisplayStyle.Flex;
-            _noiseConfig.style.display = DisplayStyle.Flex;
+            _noiseView.style.display = DisplayStyle.Flex;
             _blockLoadConfig.value =  ViewConfig.ConfigData.BlockLoadConfig;
             _mapGenerateConfig.value =  ViewConfig.ConfigData.MapGenerateConfig;
             _noiseConfig.value =  ViewConfig.ConfigData.NoiseConfig;
@@ -85,7 +85,7 @@ public class MapLoadEditorWindow : EditorWindow
         }
         _blockLoadView.style.display = DisplayStyle.None;
         _mapGenerateView.style.display = DisplayStyle.None;
-        _noiseConfig.style.display = DisplayStyle.None;
+        _noiseView.style.display = DisplayStyle.None;
         ViewConfig.Save();
     }
 
