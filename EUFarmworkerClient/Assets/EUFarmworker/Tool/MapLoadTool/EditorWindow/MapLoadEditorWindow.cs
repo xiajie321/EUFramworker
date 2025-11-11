@@ -1,6 +1,9 @@
 using System;
 using EUFarmworker.Tool.MapLoadTool.Script.Data;
+using EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig;
+using EUFarmworker.Tool.MapLoadTool.Script.Data.MapGenerateConfig;
 using EUFarmworker.Tool.MapLoadTool.Script.Data.MapLoadConfig;
+using EUFarmworker.Tool.MapLoadTool.Script.Data.NoiseConfig;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEditor.UIElements;
@@ -50,6 +53,9 @@ public class MapLoadEditorWindow : EditorWindow
         m_VisualTreeAsset.CloneTree(root);
         GetUI(root);
         Config();
+        BlockLoadConfig();
+        MapGenerateConfig();
+        NoiseConfig();
     }
 
     #region 主配置更改
@@ -71,6 +77,10 @@ public class MapLoadEditorWindow : EditorWindow
             _blockLoadView.style.display = DisplayStyle.Flex;
             _mapGenerateView.style.display = DisplayStyle.Flex;
             _noiseConfig.style.display = DisplayStyle.Flex;
+            _blockLoadConfig.value =  ViewConfig.ConfigData.BlockLoadConfig;
+            _mapGenerateConfig.value =  ViewConfig.ConfigData.MapGenerateConfig;
+            _noiseConfig.value =  ViewConfig.ConfigData.NoiseConfig;
+            ViewConfig.Save();
             return;
         }
         _blockLoadView.style.display = DisplayStyle.None;
@@ -81,9 +91,68 @@ public class MapLoadEditorWindow : EditorWindow
 
     #endregion
 
+    #region 区块配置更改
 
+    private void BlockLoadConfig()
+    {
+        _blockLoadConfig.objectType = typeof(SOBlockLoadConfigBase);
+        _blockLoadConfig.value =  ViewConfig.ConfigData.BlockLoadConfig;
+        _blockLoadConfig.RegisterValueChangedCallback(v =>
+        {
+            ViewConfig.ConfigData.BlockLoadConfig = v.newValue as SOBlockLoadConfigBase;
+            BlockLoadConfigChange();
+            ViewConfig.ConfigData.BlockLoadConfig?.Save();
+        });
+    }
 
+    private void BlockLoadConfigChange()
+    {
+        
+    }
 
+    #endregion
+
+    #region 地图生成配置更改
+
+    private void MapGenerateConfig()
+    {
+        _mapGenerateConfig.objectType = typeof(SOMapGenerateConfigBase);
+        _mapGenerateConfig.value =  ViewConfig.ConfigData.MapGenerateConfig;
+        _mapGenerateConfig.RegisterValueChangedCallback(v =>
+        {
+            ViewConfig.ConfigData.MapGenerateConfig = v.newValue as SOMapGenerateConfigBase;
+            MapGenerateConfigChange();
+            ViewConfig.ConfigData.MapGenerateConfig?.Save();
+        });
+    }
+
+    private void MapGenerateConfigChange()
+    {
+        
+    }
+
+    #endregion
+
+    #region 噪声配置更改
+
+    private void NoiseConfig()
+    {
+        _noiseConfig.objectType = typeof(SONoiseConfigBase);
+        _noiseConfig.value = ViewConfig.ConfigData.NoiseConfig;
+        _noiseConfig.RegisterValueChangedCallback(v =>
+        {
+            ViewConfig.ConfigData.NoiseConfig = v.newValue as SONoiseConfigBase;
+            NoiseConfigChange();
+            ViewConfig.ConfigData.NoiseConfig?.Save();
+        });
+    }
+
+    private void NoiseConfigChange()
+    {
+        
+    }
+
+    #endregion
     private void OnDisable()
     {
         ViewConfig.ConfigData.Save();

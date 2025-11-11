@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92eb62fd22c04fbc9b862081fc1a4cd3, type: 3}
   m_Name: DefineSO
   m_EditorClassIdentifier: 
+  BlockLoadConfig: {fileID: 0}
+  MapGenerateConfig: {fileID: 0}
+  NoiseConfig: {fileID: 0}

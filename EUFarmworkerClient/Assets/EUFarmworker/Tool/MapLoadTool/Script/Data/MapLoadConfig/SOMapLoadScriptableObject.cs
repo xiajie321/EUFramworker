@@ -3,6 +3,7 @@ using EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig;
 using EUFarmworker.Tool.MapLoadTool.Script.Data.MapGenerateConfig;
 using EUFarmworker.Tool.MapLoadTool.Script.Data.NoiseConfig;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace EUFarmworker.Tool.MapLoadTool.Script.Data.MapLoadConfig
 {
@@ -12,6 +13,6 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.MapLoadConfig
     {
         public SOBlockLoadConfigBase BlockLoadConfig;//区块加载
         public SOMapGenerateConfigBase  MapGenerateConfig;//地图生成
-        public SONiseConfigBase SONiseConfig;//噪声
+        public SONoiseConfigBase NoiseConfig;//噪声
     }
 }
