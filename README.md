@@ -10,7 +10,15 @@
 
 - 双层瓦片工具基础部分。
 
-- 引入Qframework核心部分(MVC分层)
+- 引入Qframework核心部分(MVC分层)。
+
+- 引入PrimeTween动画库。
+
+- 引入Zlinq查询库。
+
+- 引入NuGetForUnity集成在Unity内的NuGet管理库。
+
+- 引入UniTask。
 
 ## 正在进行的工作
 
@@ -31,3 +39,11 @@
 - [HybridCLR][focus-creative-games/hybridclr： HybridCLR是一个特性完整、零成本、高性能、低内存的Unity全平台原生c#热更新解决方案。HybridCLR 是一种功能齐全、零成本、高性能、低内存的解决方案，适用于 Unity 的全平台原生 c# 热更新。](https://github.com/focus-creative-games/hybridclr)
 
 - [Qframework][liangxiegame/QFramework：Godot/Unity3D 系统设计架构](https://github.com/liangxiegame/QFramework)
+
+- [ZLinq][Cysharp/ZLinq：零分配 LINQ，适用于所有 .NET 平台和 Unity、Godot，具有 LINQ to Span、LINQ to SIMD 和 LINQ to Tree（文件系统、JSON、GameObject 等）。](https://github.com/Cysharp/ZLinq)
+
+- [NuGetForUnity][GlitchEnzo/NuGetForUnity: A NuGet Package Manager for Unity](https://github.com/GlitchEnzo/NuGetForUnity)
+
+- [PrimeTween][KyryloKuzyk/PrimeTween：用于 Unity 的高性能、免分配补间库。在一行代码中创建动画、延迟和序列。](https://github.com/KyryloKuzyk/PrimeTween)
+
+- [UniTask][Cysharp/UniTask: Provides an efficient allocation free async/await integration for Unity.](https://github.com/Cysharp/UniTask)
