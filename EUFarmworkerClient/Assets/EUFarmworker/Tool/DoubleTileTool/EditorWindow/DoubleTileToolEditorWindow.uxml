@@ -29,9 +29,9 @@
                     </ui:VisualElement>
                     <ui:VisualElement name="TogglesShow" style="flex-grow: 1; display: flex;">
                         <ui:VisualElement style="flex-grow: 1; margin-top: 10px; margin-right: 10px; margin-bottom: 10px; margin-left: 10px; flex-direction: row; border-left-color: rgb(38, 38, 38); border-right-color: rgb(38, 38, 38); border-top-color: rgb(38, 38, 38); border-bottom-color: rgb(38, 38, 38); border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px;">
-                            <ui:Toggle label="运行时生成组合瓦片" tooltip="该选项能够减少包体大小,但可能导致在第一次加载不同瓦片时造成卡顿。" name="IsRuntimeGenerate" style="align-self: center; justify-content: center; align-items: center; -unity-text-align: upper-center;" />
-                            <ui:IntegerField label="帧" value="-1" name="Frame" style="-unity-text-align: middle-right;" />
-                            <ui:FloatField label="播放速度" value="-1" name="FrameRate" focusable="true" style="-unity-text-align: middle-right;" />
+                            <ui:Toggle label="运行时生成组合瓦片" tooltip="该选项能够减少包体大小,但可能导致在第一次加载不同瓦片时造成卡顿。" name="IsRuntimeGenerate" style="align-self: center; justify-content: center; align-items: center; -unity-text-align: upper-center; display: none;" />
+                            <ui:IntegerField label="动画帧数" value="-1" name="Frame" style="-unity-text-align: middle-right;" />
+                            <ui:FloatField label="动画播放速度" value="-1" name="FrameRate" focusable="true" style="-unity-text-align: middle-right;" />
                             <ui:DropdownField label="瓦片对象类型" name="TileObjectType" style="align-self: auto; -unity-text-align: middle-right; max-width: 200px; flex-wrap: nowrap; flex-direction: row; justify-content: center; align-items: auto; display: none;" />
                         </ui:VisualElement>
                     </ui:VisualElement>

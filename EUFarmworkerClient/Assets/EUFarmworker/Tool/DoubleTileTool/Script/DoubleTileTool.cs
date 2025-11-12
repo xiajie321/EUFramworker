@@ -8,7 +8,7 @@ using Object = UnityEngine.Object;
 
 namespace EUFarmworker.Tool.DoubleTileTool.Script
 {
-    public class DoubleTileTool
+    public static class DoubleTileTool
     {
         private static readonly Dictionary<Vector3Int,TileType> _tileData = new();
 
@@ -17,8 +17,12 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
         public static Tilemap _viewGrid;
         static bool _showTagGrid;
         static SODoubleTileViewConfig _doubleTileViewConfig;
+        /// <summary>
+        /// 每次重新进入游戏场景时都需要重新初始化一次
+        /// </summary>
         public static void Init()//初始化瓦片工具
         {
+            Clear();
             if (_tagGrid || _viewGrid)
             {
                 Debug.LogWarning("[DoubleTileTool] 重复初始化!");
@@ -205,13 +209,13 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
         }
         
         /// <summary>
-        /// 清除所有瓦片
+        /// 清除所有瓦片(初始化的时候会执行一次,但如果需要游戏场景中重新绘制仍然可以调用)
         /// </summary>
         public static void Clear()
         {
             _tileData.Clear();
-            _tagGrid.ClearAllTiles();
-            _viewGrid.ClearAllTiles();
+            _tagGrid?.ClearAllTiles();
+            _viewGrid?.ClearAllTiles();
         }
         /// <summary>
         /// 释放缓存(不会导致瓦片被清除,清除场景中的瓦片应使用Clear)

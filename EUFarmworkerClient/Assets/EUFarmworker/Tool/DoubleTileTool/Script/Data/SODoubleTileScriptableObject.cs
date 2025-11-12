@@ -24,10 +24,10 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script.Data
         {
             EnumGenerate();
             if(IsRuntimeGenerate) return;//运行时执行部分不会进行生成
-            TileResourceGenerate();
+            //TileResourceGenerate();
         }
 
-        internal void TileResourceGenerate()
+        internal void TileResourceGenerate()//生成瓦片
         {
             DoubleTileToolTileGenerate.Init(this);
             string lsname = "";

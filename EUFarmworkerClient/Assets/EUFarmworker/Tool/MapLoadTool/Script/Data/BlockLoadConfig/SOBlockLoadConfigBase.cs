@@ -1,7 +1,30 @@
-﻿namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
+﻿using System;
+using UnityEngine;
+
+namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
 {
+    /// <summary>
+    /// 主要作用是描述区块生成算法
+    /// </summary>
     public abstract class SOBlockLoadConfigBase:ScriptableObjectEditorBase
     {
-        
+        //推荐优化方式,使用队列去限制每帧触发时最多加载与卸载的次数。
+        public event Action<Vector3Int> OnLoadBlockChangeEvent;
+        public event Action<Vector3Int> OnUninstallBlockChangeEvent;
+        /// <summary>
+        /// 单个区块的大小
+        /// </summary>
+        /// <param name="size"></param>
+        public abstract void SetSingleBlockSize(int size);
+        /// <summary>
+        /// 设置显示区块的范围
+        /// </summary>
+        /// <param name="size"></param>
+        public abstract void SetLookBlockSize(Vector3 size);
+        /// <summary>
+        /// 正在移动时执行的方法
+        /// </summary>
+        /// <param name="position">当前的位置</param>
+        public abstract void OnMovePosition(Vector3 position);
     }
 }
