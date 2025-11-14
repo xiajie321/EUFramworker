@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using EUFarmworker.Tool.DoubleTileTool.Script.Data;
 using EUFarmworker.Tool.DoubleTileTool.Script.Generate;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Object = UnityEngine.Object;
@@ -17,18 +18,19 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
         public static Tilemap _viewGrid;
         static bool _showTagGrid;
         static SODoubleTileViewConfig _doubleTileViewConfig;
+        private static GameObject root;
         /// <summary>
         /// 每次重新进入游戏场景时都需要重新初始化一次
         /// </summary>
         public static void Init()//初始化瓦片工具
         {
             Clear();
-            if (_tagGrid || _viewGrid)
+            if (root)
             {
                 Debug.LogWarning("[DoubleTileTool] 重复初始化!");
                 return;
             }
-            GameObject root = Object.Instantiate(Resources.Load<GameObject>("EUFarmworker/DoubleTileTool/DoubleTileTool"));
+            root = Object.Instantiate(Resources.Load<GameObject>("EUFarmworker/DoubleTileTool/DoubleTileTool"));
             _doubleTileViewConfig = root.GetComponent<DoubleTileToolRunTimeMono>().Config;
             root.transform.position = new Vector3(0,0,0);
             
@@ -85,13 +87,22 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
                 _onTileChangeEvent?.Invoke(_lsChangeData);
                 return;
             }
-            if(_tileData[cellPosition] == tileType)
+
+            if (_tileData[cellPosition] == tileType)
+            {
+                LoadTile(cellPosition);
                 return;
+            }
             _lsChangeData.OldTileType = default;
             _lsChangeData.NewTileType = tileType;
             _tileData[cellPosition] = tileType;
             TileChange(cellPosition,tileType);
             _onTileChangeEvent?.Invoke(_lsChangeData);
+        }
+
+        public static void SetTiles(Vector3Int[] position, TileType[] tileType)
+        {
+            
         }
         private static readonly Dictionary<TileType,Tile> _tagTiles = new();
         /// <summary>
@@ -110,6 +121,8 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
             _tagTiles.Add(tileType,ls);
             return ls;
         }
+
+        private static NativeArray<Vector3Int> _ls;
         private static void TileChange(Vector3Int position, TileType tileType)
         {
             //Debug.Log(position);
@@ -117,11 +130,11 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
             {
                 var type = new TileTypeGroup();
                 //Debug.Log(i);
-                List<Vector3Int> ls = ViewCellToTagCell(i);
+                _ls = ViewCellToTagCell(i);
                 for(int j = 0;j<4;j++)
                 {
                     //Debug.Log($"{ls[j]} {GetTile(ls[j])}");
-                    type.SetTileType(j,GetTile(ls[j]));
+                    type.SetTileType(j,GetTile(_ls[j]));
                 }
                 //Debug.Log($"{type.LeftTop} {type.RightTop} {type.LeftBottom} {type.RightBottom} ");
                 if(_doubleTileViewConfig.ConfigData.TileObjectType == TileObjectType.Sprite)
@@ -132,6 +145,8 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
             { 
                 _tagGrid.SetTile(position,GetTagTile(tileType));
             }
+
+            if (_ls.IsCreated) _ls.Dispose();
         }
         /// <summary>
         /// 注册瓦片改变事件
@@ -161,13 +176,13 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
         /// </summary>
         /// <param name="cellPosition">上左,上右,下左,下右</param>
         /// <returns></returns>
-        public static List<Vector3Int> ViewCellToTagCell(Vector3Int cellPosition)
+        public static NativeArray<Vector3Int> ViewCellToTagCell(Vector3Int cellPosition)
         {
-            List<Vector3Int> ls = new();
-            ls.Add(cellPosition + new Vector3Int(-1,0,0));
-            ls.Add(cellPosition);
-            ls.Add(cellPosition + new Vector3Int(-1,-1,0));
-            ls.Add(cellPosition + new Vector3Int(0,-1,0));
+            NativeArray<Vector3Int> ls = new(4,Allocator.Temp);
+            ls[0]=cellPosition + new Vector3Int(-1,0,0);
+            ls[1]=cellPosition;
+            ls[2]=cellPosition + new Vector3Int(-1,-1,0);
+            ls[3]=cellPosition + new Vector3Int(0,-1,0);
             return ls;
         }
         /// <summary>

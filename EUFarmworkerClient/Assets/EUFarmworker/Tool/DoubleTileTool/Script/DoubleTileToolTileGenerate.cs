@@ -36,7 +36,7 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
                 _tileGroupTexture2DResources.Add(tileTypeGroup, DynamicTexture2D(tileTypeGroup));
                 return _tileGroupTexture2DResources[tileTypeGroup];
             }
-
+            Debug.Log("111");
             _tileGroupTexture2DResources.Add(tileTypeGroup, new List<Texture2D>() { StaticTexture2D(tileTypeGroup,GetTileTypeGroupIndexs(tileTypeGroup)) });
             return _tileGroupTexture2DResources[tileTypeGroup];
         }

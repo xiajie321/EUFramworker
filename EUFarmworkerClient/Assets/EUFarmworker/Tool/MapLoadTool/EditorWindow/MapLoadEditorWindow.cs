@@ -31,6 +31,7 @@ public class MapLoadEditorWindow : EditorWindow
     private ObjectField _blockLoadConfig;
     private ObjectField _mapGenerateConfig;
     private ObjectField _noiseConfig;
+    private VisualElement _noiseImage;
 
     private VisualElement _blockLoadView;
     private VisualElement _mapGenerateView;
@@ -42,6 +43,7 @@ public class MapLoadEditorWindow : EditorWindow
         _blockLoadConfig = root.Q<ObjectField>("BlockLoadConfig");
         _mapGenerateConfig = root.Q<ObjectField>("MapGenerateConfig");
         _noiseConfig = root.Q<ObjectField>("NoiseConfig");
+        _noiseImage = root.Q<VisualElement>("NoiseImage");
         
         _blockLoadView = root.Q<VisualElement>("BlockLoadView");
         _mapGenerateView = root.Q<VisualElement>("MapGenerateView");
@@ -139,6 +141,7 @@ public class MapLoadEditorWindow : EditorWindow
     {
         _noiseConfig.objectType = typeof(SONoiseConfigBase);
         _noiseConfig.value = ViewConfig.ConfigData.NoiseConfig;
+        NoiseConfigChange();
         _noiseConfig.RegisterValueChangedCallback(v =>
         {
             ViewConfig.ConfigData.NoiseConfig = v.newValue as SONoiseConfigBase;
@@ -149,7 +152,18 @@ public class MapLoadEditorWindow : EditorWindow
 
     private void NoiseConfigChange()
     {
-        
+        if(!ViewConfig.ConfigData.NoiseConfig) return;
+        Texture2D ls = new Texture2D(100,100);
+        for (int i = 0; i < 100; i++)
+        {
+            for (int j = 0; j < 100; j++)
+            {
+                float k = ViewConfig.ConfigData.NoiseConfig.OnUse(new Vector3(i, j, 0));
+                ls.SetPixel(i,j,new Color(k,k,k,1));
+            }
+        }
+        ls.Apply();
+        _noiseImage.style.backgroundImage = ls;
     }
 
     #endregion

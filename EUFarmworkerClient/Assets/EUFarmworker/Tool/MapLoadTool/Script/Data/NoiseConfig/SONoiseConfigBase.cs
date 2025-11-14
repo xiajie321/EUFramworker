@@ -23,6 +23,6 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.NoiseConfig
         /// </summary>
         /// <param name="position">提供生成位置的信息</param>
         /// <returns></returns>
-        public abstract int OnUse(Vector3 position);
+        public abstract float OnUse(Vector3 position);
     }
 }

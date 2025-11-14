@@ -3,12 +3,14 @@ using EUFarmworker.Tool.MapLoadTool.Script.Data;
 using EUFarmworker.Tool.MapLoadTool.Script.Data.MapGenerateConfig;
 using EUFarmworker.Tool.MapLoadTool.Script.Data.NoiseConfig;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace EUFarmworker.Tool.MapLoadTool.Script
 {
     public static class MapLoadTool
     {
         private static SOMapLoadViewConfig _mapLoadViewConfig;
+        private static GameObject root;
         /// <summary>
         /// 初始化地图加载(每次更换新的游戏场景都需要重新加载)
         /// </summary>
@@ -16,6 +18,13 @@ namespace EUFarmworker.Tool.MapLoadTool.Script
         /// <param name="soNoiseConfigBase">为空表示噪声规则为地图默认</param>
         public static void Init(SOMapGenerateConfigBase soMapGenerateConfigBase = null,SONoiseConfigBase soNoiseConfigBase = null)
         {
+            if (root)
+            {
+                Debug.LogError("[MapLoadTool] 重复初始化");
+                return;
+            }
+            root = Object.Instantiate(Resources.Load<GameObject>("EUFarmworker/MapLoadTool/MapLoadTool"));
+            _mapLoadViewConfig = root.GetComponent<MapLoadToolRunTime>().Config;
             if(soMapGenerateConfigBase) _mapLoadViewConfig.ConfigData.MapGenerateConfig = soMapGenerateConfigBase;
             if(soNoiseConfigBase) _mapLoadViewConfig.ConfigData.NoiseConfig = soNoiseConfigBase;
             _mapLoadViewConfig.ConfigData.MapGenerateConfig.OnInit(_mapLoadViewConfig.ConfigData.BlockLoadConfig, _mapLoadViewConfig.ConfigData.NoiseConfig);
@@ -34,7 +43,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script
         /// <param name="callback"></param>
         public static void OnLoadBlockChangeEvent(Action<Vector3Int> callback)
         {
-            _mapLoadViewConfig.ConfigData.BlockLoadConfig.OnLoadBlockChangeEvent += callback;
+            _mapLoadViewConfig.ConfigData.BlockLoadConfig.OnLoadBlockChangeEvent(callback);
         }
         
         /// <summary>
@@ -43,7 +52,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script
         /// <param name="callback"></param>
         public static void OnUninstallBlockChangeEvent(Action<Vector3Int> callback)
         {
-            _mapLoadViewConfig.ConfigData.BlockLoadConfig.OnUninstallBlockChangeEvent += callback;
+            _mapLoadViewConfig.ConfigData.BlockLoadConfig.OnUninstallBlockChangeEvent(callback);
         }
         /// <summary>
         /// 视野位置,决定了区块加载。
@@ -58,7 +67,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script
         /// 设置区块显示范围
         /// </summary>
         /// <param name="size"></param>
-        public static void SetLookBlockSize(Vector3 size)
+        public static void SetLookBlockSize(Vector3Int size)
         {
             _mapLoadViewConfig.ConfigData.BlockLoadConfig?.SetLookBlockSize(size);
         }

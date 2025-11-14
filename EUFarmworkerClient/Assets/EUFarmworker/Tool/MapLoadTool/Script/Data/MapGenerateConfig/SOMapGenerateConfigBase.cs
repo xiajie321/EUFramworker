@@ -9,6 +9,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.MapGenerateConfig
     /// </summary>
     public abstract class SOMapGenerateConfigBase : ScriptableObjectEditorBase
     {
+        [SerializeField]
         internal Vector2Int _mapSize;
 
         /// <summary>
