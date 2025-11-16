@@ -48,35 +48,46 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
         private readonly Queue<Vector3Int> _uninstallQueue = new();
         private void UpdateBlock(Vector3Int newPosition)
         {
+            _lsBlocks.Clear();
+    
             int lsi = _lookBlockSize.x * 2 + 1;
-            int lsj  = _lookBlockSize.y * 2 + 1;
-            var lsdata = newPosition + new Vector3Int(_lookBlockSize.x * _singleBlockSize,_lookBlockSize.y*_singleBlockSize,0);
-            var lsdata2 = lsdata;
-            if(_lsBlocks.Count >0) _lsBlocks.Clear();
+            int lsj = _lookBlockSize.y * 2 + 1;
+    
+            var currentPos = new Vector3Int(
+                newPosition.x + _lookBlockSize.x * _singleBlockSize,
+                newPosition.y + _lookBlockSize.y * _singleBlockSize,
+                0
+            );
+    
+            // 预计算减少循环内的运算
+            int xStep = _singleBlockSize;
+            int yStep = _singleBlockSize;
+    
             for (int i = 0; i < lsi; i++)
             {
-                lsdata2 = lsdata;
+                var rowPos = currentPos;
                 for (int j = 0; j < lsj; j++)
                 {
-                    _lsBlocks.Add(lsdata2);
-                    lsdata2 -= new Vector3Int(0,_singleBlockSize);
+                    _lsBlocks.Add(rowPos);
+                    rowPos.y -= yStep;
                 }
-                lsdata -= new Vector3Int(_singleBlockSize,0);
+                currentPos.x -= xStep;
             }
-
-            foreach (var item in _blocks)
+    
+            // 使用更高效的集合差异计算
+            foreach (var existingBlock in _blocks)
             {
-                if (!_lsBlocks.Contains(item))
+                if (!_lsBlocks.Contains(existingBlock))
                 {
-                    _uninstallQueue.Enqueue(item);
+                    _uninstallQueue.Enqueue(existingBlock);
                 }
             }
-
-            foreach (var item in _lsBlocks)
+    
+            foreach (var newBlock in _lsBlocks)
             {
-                if (!_blocks.Contains(item))
+                if (!_blocks.Contains(newBlock))
                 {
-                    _loadQueue.Enqueue(item);
+                    _loadQueue.Enqueue(newBlock);
                 }
             }
             if (!_runUninstall)
@@ -127,7 +138,9 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
                             num = 0;
                             //await  UniTask.Yield();
                         }
-                        _OnLoadBlockChangeEvent?.Invoke(position + new Vector3Int(i, j, 0));
+
+                        Vector3Int ls = position + new Vector3Int(i, j, 0);
+                        _OnLoadBlockChangeEvent?.Invoke(ls);
                         num++;
                     }
                 }

@@ -76,6 +76,7 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
         /// <param name="tileType">瓦片类型</param>
         public static void SetTile(Vector3 position,TileType tileType)
         {
+            if(!_tagGrid||!_viewGrid) return;
             Vector3Int cellPosition = _tagGrid.WorldToCell(position);
             _lsChangeData.Position =  cellPosition;
             if (!_tileData.ContainsKey(cellPosition))
