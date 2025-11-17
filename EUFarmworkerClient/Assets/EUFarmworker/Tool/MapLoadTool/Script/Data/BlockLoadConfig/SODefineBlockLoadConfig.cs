@@ -12,16 +12,26 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
         private int _singleBlockSize = 30;
         [SerializeField]
         private Vector3Int _lookBlockSize = new(3,3,0);
-        [SerializeField] private int _invokeQuantity = 100;
         public override void SetSingleBlockSize(int size)
         {
             _singleBlockSize = size;
+        }
+
+        public override int GetSingleBlockSize()
+        {
+            return _singleBlockSize;
         }
 
         public override void SetLookBlockSize(Vector3Int size)
         {
             _lookBlockSize = size;
         }
+
+        public override Vector3Int GetLookBlockSize()
+        {
+            return _lookBlockSize;
+        }
+
         [NonSerialized]
         private Vector3Int _qkcenter;
         [NonSerialized]
@@ -29,11 +39,19 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
         public override void OnMovePosition(Vector3 position)
         {
             var lsdata = new Vector3Int(
-                position.x>=0? (int)(position.x / _singleBlockSize):(int)(position.x / _singleBlockSize)-1, 
+                position.x>=0? (int)(position.x / _singleBlockSize):(int)(position.x / _singleBlockSize) -1, 
                 position.y>=0?(int)(position.y / _singleBlockSize) :(int)(position.y / _singleBlockSize) -1,
                 0);
             var newcenter = new Vector3Int(lsdata.x * _singleBlockSize,lsdata.y * _singleBlockSize);//区块位置
-            
+            if (!_runUninstall)
+            {
+                UpdateUninstall().Forget();
+            }
+            if (!_runLoad)
+            {
+                UpdateLoad().Forget();
+            }
+
             if(_qkcenter ==  newcenter && isInit) return;
             UpdateBlock(newcenter);
             _qkcenter = newcenter;
@@ -90,24 +108,16 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
                     _loadQueue.Enqueue(newBlock);
                 }
             }
-            if (!_runUninstall)
-            {
-                UpdateUninstall().Forget();
-            }
-
-            if (!_runLoad)
-            {
-                UpdateLoad().Forget();
-            }
         }
         [NonSerialized]
         bool _runLoad = false;
         private async UniTaskVoid UpdateLoad()
         {
+            if(_loadQueue.Count == 0) return;
             _runLoad = true;
             while (_loadQueue.Count > 0)
             {
-                LoadBlock(_loadQueue.Dequeue());//.Forget();
+                LoadBlock(_loadQueue.Dequeue());
                 await UniTask.DelayFrame(10);
             }
             _runLoad = false;
@@ -116,10 +126,11 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
         bool _runUninstall = false;
         private async UniTaskVoid UpdateUninstall()
         {
+            if(_uninstallQueue.Count == 0) return;
             _runUninstall = true;
             while (_uninstallQueue.Count > 0)
             {
-                UninstallBlock(_uninstallQueue.Dequeue());//.Forget();
+                UninstallBlock(_uninstallQueue.Dequeue());
                 await UniTask.DelayFrame(10);
             }
             _runUninstall = false;
@@ -128,22 +139,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
         {
             if (!_blocks.Contains(position))
             {
-                int num = 0;
-                for (int i = 0; i < _singleBlockSize; i++)
-                {
-                    for (int j = 0; j < _singleBlockSize; j++)
-                    {
-                        if (num > 1/Time.deltaTime)
-                        {
-                            num = 0;
-                            //await  UniTask.Yield();
-                        }
-
-                        Vector3Int ls = position + new Vector3Int(i, j, 0);
-                        _OnLoadBlockChangeEvent?.Invoke(ls);
-                        num++;
-                    }
-                }
+                _OnLoadBlockChangeEvent?.Invoke(position);
                 _blocks.Add(position);
             }
         }
@@ -152,20 +148,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
         {
             if (_blocks.Contains(position))
             {
-                int num = 0;
-                for (int i = 0; i < _singleBlockSize; i++)
-                {
-                    for (int j = 0; j < _singleBlockSize; j++)
-                    {
-                        if (num > 1/Time.deltaTime)
-                        {
-                            num = 0;
-                            //await UniTask.Yield();
-                        }
-                        _OnUninstallBlockChangeEvent?.Invoke(position + new Vector3Int(i, j, 0));
-                        num++;
-                    }
-                }
+                _OnUninstallBlockChangeEvent?.Invoke(position);
                 _blocks.Remove(position);
             }
         }

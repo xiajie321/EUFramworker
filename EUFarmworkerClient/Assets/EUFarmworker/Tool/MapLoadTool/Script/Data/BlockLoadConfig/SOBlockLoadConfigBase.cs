@@ -32,10 +32,20 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
         /// <param name="size"></param>
         public abstract void SetSingleBlockSize(int size);
         /// <summary>
+        /// 获取当前单个区块的大小
+        /// </summary>
+        /// <returns></returns>
+        public abstract int GetSingleBlockSize();
+        /// <summary>
         /// 设置显示区块的范围
         /// </summary>
         /// <param name="size"></param>
         public abstract void SetLookBlockSize(Vector3Int size);
+        /// <summary>
+        /// 区块显示范围的信息
+        /// </summary>
+        /// <returns></returns>
+        public abstract Vector3Int GetLookBlockSize();
         /// <summary>
         /// 正在移动时执行的方法
         /// </summary>
