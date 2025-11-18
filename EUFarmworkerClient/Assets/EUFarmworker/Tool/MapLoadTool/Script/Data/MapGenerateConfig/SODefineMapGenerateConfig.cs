@@ -38,8 +38,8 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.MapGenerateConfig
             int len = lsSj * lsSj;
             GcInit(len);
             NativeInit(len);
-            blockLoadConfig.OnLoadBlockChangeEvent(LoadBlockChange);
-            blockLoadConfig.OnUninstallBlockChangeEvent(UninstBlockChange);
+            blockLoadConfig.RegisterLoadBlockChangeEvent(LoadBlockChange);
+            blockLoadConfig.RegisterUninstallBlockChangeEvent(UninstBlockChange);
             blockLoadConfig.Init();
         }
 
@@ -55,6 +55,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.MapGenerateConfig
         }
         public override void Dispose()
         {
+            
         }
         
         private Vector3Int[] _lsKeys;

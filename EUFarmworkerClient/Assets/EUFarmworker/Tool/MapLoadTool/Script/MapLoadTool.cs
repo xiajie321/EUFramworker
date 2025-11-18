@@ -43,7 +43,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script
         /// <param name="callback"></param>
         public static void OnLoadBlockChangeEvent(Action<Vector3Int> callback)
         {
-            _mapLoadViewConfig.ConfigData.BlockLoadConfig.OnLoadBlockChangeEvent(callback);
+            _mapLoadViewConfig.ConfigData.BlockLoadConfig.RegisterLoadBlockChangeEvent(callback);
         }
         
         /// <summary>
@@ -52,7 +52,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script
         /// <param name="callback"></param>
         public static void OnUninstallBlockChangeEvent(Action<Vector3Int> callback)
         {
-            _mapLoadViewConfig.ConfigData.BlockLoadConfig.OnUninstallBlockChangeEvent(callback);
+            _mapLoadViewConfig.ConfigData.BlockLoadConfig.RegisterUninstallBlockChangeEvent(callback);
         }
         /// <summary>
         /// 视野位置,决定了区块加载。

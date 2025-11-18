@@ -11,15 +11,37 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
         //推荐优化方式,使用队列去限制每帧触发时最多加载与卸载的次数。
         internal Action<Vector3Int> _OnLoadBlockChangeEvent;
         internal Action<Vector3Int> _OnUninstallBlockChangeEvent;
-
-        public void OnLoadBlockChangeEvent(Action<Vector3Int> onLoadBlockChangeEvent)
+        /// <summary>
+        /// 注册区块加载改变事件;注意,要使用具体方法而非匿名方法否则无法注销
+        /// </summary>
+        /// <param name="onLoadBlockChangeEvent"></param>
+        public void RegisterLoadBlockChangeEvent(Action<Vector3Int> onLoadBlockChangeEvent)
         {
             _OnLoadBlockChangeEvent += onLoadBlockChangeEvent;
         }
-
-        public void OnUninstallBlockChangeEvent(Action<Vector3Int> onUninstallBlockChangeEvent)
+        /// <summary>
+        /// 注册区块卸载改变事件;注意,要使用具体方法而非匿名方法否则无法注销
+        /// </summary>
+        /// <param name="onLoadBlockChangeEvent"></param>
+        public void RegisterUninstallBlockChangeEvent(Action<Vector3Int> onUninstallBlockChangeEvent)
         {
             _OnUninstallBlockChangeEvent += onUninstallBlockChangeEvent;
+        }
+        /// <summary>
+        /// 注销区块加载改变事件;注意,要使用具体方法而非匿名方法否则无法注销
+        /// </summary>
+        /// <param name="onLoadBlockChangeEvent"></param>
+        public void UnRegisterLoadBlockChangeEvent(Action<Vector3Int> onLoadBlockChangeEvent)
+        {
+            _OnLoadBlockChangeEvent -= onLoadBlockChangeEvent;
+        }
+        /// <summary>
+        /// 注销区块卸载改变事件;注意,要使用具体方法而非匿名方法否则无法注销
+        /// </summary>
+        /// <param name="onLoadBlockChangeEvent"></param>
+        public void UnRegisterUninstallBlockChangeEvent(Action<Vector3Int> onUninstallBlockChangeEvent)
+        {
+            _OnUninstallBlockChangeEvent -= onUninstallBlockChangeEvent;
         }
         /// <summary>
         /// 初始化

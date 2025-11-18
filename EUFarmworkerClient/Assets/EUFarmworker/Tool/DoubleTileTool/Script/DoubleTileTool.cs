@@ -14,7 +14,7 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
     public  static class DoubleTileTool
     {
         private static Dictionary<TileKey, TileType> _tileData = new();
-        
+        private static event Action<TileChangeData> _onTileChangeEvent;
         public static Tilemap _tagGrid;
         public static Tilemap _viewGrid;
         static bool _showTagGrid;
@@ -95,6 +95,7 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
                 _lsChangeData.OldTileType = default;
                 _lsChangeData.NewTileType = tileType;
                 _tileData.Add(cellPosition, tileType);
+                _onTileChangeEvent?.Invoke(_lsChangeData);
                 TileChange(cellPosition, tileType);
                 return;
             }
@@ -108,6 +109,7 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
             _lsChangeData.OldTileType = default;
             _lsChangeData.NewTileType = tileType;
             _tileData[cellPosition] = tileType;
+            _onTileChangeEvent?.Invoke(_lsChangeData);
             TileChange(cellPosition, tileType);
         }
         
@@ -306,12 +308,22 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
         }
 
         /// <summary>
-        /// 注册瓦片改变事件(暂时不支持)
+        /// 注册瓦片改变事件(SetTiles更改不会触发)注意,要使用具体方法而非匿名方法否则无法注销
         /// </summary>
         /// <param name="action"></param>
         public static void RegisterTileChangeEvent(Action<TileChangeData> action)
         {
+            _onTileChangeEvent += action;
         }
+        /// <summary>
+        /// 注销瓦片改变事件(SetTiles更改不会触发)注意,要使用具体方法而非匿名方法否则无法注销
+        /// </summary>
+        /// <param name="action"></param>
+        public static void UnRegisterTileChangeEvent(Action<TileChangeData> action)
+        {
+            _onTileChangeEvent -= action;
+        }
+
 
         /// <summary>
         /// 获取受影响的位置(Native容器!一定要记得释放!)
