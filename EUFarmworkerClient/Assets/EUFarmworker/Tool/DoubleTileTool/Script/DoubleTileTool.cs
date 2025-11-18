@@ -13,7 +13,7 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
 {
     public  static class DoubleTileTool
     {
-        private static readonly Dictionary<Vector3Int, TileType> _tileData = new();
+        private static Dictionary<TileKey, TileType> _tileData = new();
         
         public static Tilemap _tagGrid;
         public static Tilemap _viewGrid;
@@ -26,12 +26,13 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
         public static void Init() //初始化瓦片工具
         {
             Clear();
+            Dispose();//防止未释放
             if (root)
             {
                 Debug.LogWarning("[DoubleTileTool] 重复初始化!");
                 return;
             }
-
+            NativeInit();
             root = Object.Instantiate(Resources.Load<GameObject>("EUFarmworker/DoubleTileTool/DoubleTileTool"));
             _doubleTileViewConfig = root.GetComponent<DoubleTileToolRunTimeMono>().Config;
             root.transform.position = new Vector3(0, 0, 0);
@@ -56,6 +57,11 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
             DoubleTileToolTileGenerate.Init(_doubleTileViewConfig.ConfigData);
         }
 
+        private static void NativeInit()
+        {
+            _ls = new(4,Allocator.Persistent);
+            _ls2 = new(4,Allocator.Persistent);
+        }
         /// <summary>
         /// 显示标记网格
         /// </summary>
@@ -115,8 +121,28 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
                 Debug.LogError("[DoubleTileTool] 数组长度不一致");
                 return;
             }
-            lsKTileData = new Vector3Int[positions.Length * 4];
-            lsVTileData = new TileBase[positions.Length * 4];
+
+            #region 数组新建与重建
+
+            if (lsKTileData == null)
+            {
+                lsKTileData = new Vector3Int[positions.Length * 4];
+            }
+            else if (lsKTileData.Length != positions.Length * 4)
+            {
+                lsKTileData = new Vector3Int[positions.Length * 4];
+            }
+            if (lsVTileData == null)
+            {
+                lsVTileData = new TileBase[positions.Length * 4];
+            }
+            else if (lsVTileData.Length != positions.Length * 4)
+            {
+                lsVTileData = new TileBase[positions.Length * 4];
+            }
+
+            #endregion
+
             Vector3Int cellPosition;
             int sum = 0;
             for (int i =0;i<positions.Length;i++)
@@ -130,24 +156,21 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
                 {
                     _tileData.Add(cellPosition,tileTypes[i]);
                 }
-                var lsbl1 = TagCellToViewCell(cellPosition);
+                TagCellToViewCell(cellPosition,ref _ls2);
                 var type = new TileTypeGroup();
-                foreach (var j in lsbl1)
+                for (int j = 0;j<_ls2.Length;j++)
                 {
-                    _ls = ViewCellToTagCell(j);
+                    ViewCellToTagCell(_ls2[j],ref _ls);
                     for (int k = 0; k < 4; k++)
                     {
                         type.SetTileType(k, GetTile(_ls[k]));
                     }
                     //Debug.Log($"{j} {type.LeftTop} {type.RightTop} {type.LeftBottom} {type.RightBottom}");
 
-                    lsKTileData[sum] = j + new Vector3Int(-1, -1, 0);
+                    lsKTileData[sum] = new Vector3Int(_ls2[j].x-1, _ls2[j].y-1, _ls2[j].z);
                     lsVTileData[sum] = DoubleTileToolTileGenerate.GetTileBase(type);
                     sum++;
-                    if (_ls.IsCreated) _ls.Dispose();
                 }
-
-                if (lsbl1.IsCreated) lsbl1.Dispose();
             }
             if (_doubleTileViewConfig.ConfigData.TileObjectType == TileObjectType.Sprite)
                 _viewGrid.SetTiles(lsKTileData,lsVTileData);
@@ -160,31 +183,55 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
         public static void UninstallTiles(Vector3Int[] positions)
         {
             if (!_tagGrid || !_viewGrid) return;
-            lsKTileData = new Vector3Int[positions.Length * 4];
-            lsVTileData = new TileBase[positions.Length * 4];
+
+            #region 数组新建与重建
+            if (lsKTileData == null)
+            {
+                lsKTileData = new Vector3Int[positions.Length * 4];
+            }
+            else if (lsKTileData.Length != positions.Length * 4)
+            {
+                lsKTileData = new Vector3Int[positions.Length * 4];
+            }
+            if (lsVTileData == null)
+            {
+                lsVTileData = new TileBase[positions.Length * 4];
+            }
+            else if (lsVTileData.Length != positions.Length * 4)
+            {
+                lsVTileData = new TileBase[positions.Length * 4];
+            }
+            if (_uninstallTiles == null)
+            {
+                _uninstallTiles = new TileBase[positions.Length];
+            }
+            else if (_uninstallTiles.Length != positions.Length)
+            {
+                _uninstallTiles = new TileBase[positions.Length];
+            }
+
+            #endregion
+
             int sum = 0;
-            _uninstallTiles = new TileBase[positions.Length];
             Vector3Int cellPosition;
             for (int i =0;i<positions.Length;i++)
             {
                 cellPosition = _tagGrid.WorldToCell(positions[i]);
-                var lsbl1 = TagCellToViewCell(cellPosition);
+                TagCellToViewCell(cellPosition,ref _ls2);
                 var type = new TileTypeGroup();
-                foreach (var j in lsbl1)
+                for (int j=0;j<_ls2.Length;j++)
                 {
-                    _ls = ViewCellToTagCell(j);
+                    ViewCellToTagCell(_ls2[j],ref _ls);
                     for (int k = 0; k < 4; k++)
                     {
                         type.SetTileType(k, GetTile(_ls[k]));
                     }
 
-                    lsKTileData[sum] = j + new Vector3Int(-1, -1, 0);
+                    lsKTileData[sum] = new Vector3Int(_ls2[j].x-1,_ls2[j].y -1, _ls2[j].z);
                     lsVTileData[sum] = null;
                     sum++;
-                    if (_ls.IsCreated) _ls.Dispose();
                 }
                 _uninstallTiles[i] = null;
-                if (lsbl1.IsCreated) lsbl1.Dispose();
             }
 
             if (_doubleTileViewConfig.ConfigData.TileObjectType == TileObjectType.Sprite)
@@ -210,7 +257,7 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
             }
 
             var ls = ScriptableObject.CreateInstance<Tile>();
-            var lsString = tileType.ToString();
+            var lsString = tileType.PoolToString();
             ls.sprite = _doubleTileViewConfig.ConfigData.TileDatas.Find(v => v.TileName.Equals(lsString))
                 .TagTexture;
             _tagTiles.Add(tileType, ls);
@@ -220,25 +267,26 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
         public static TileBase[] GetTagTiles(TileType[] tileTypes)
         {
             TileBase[] tiles = new TileBase[tileTypes.Length];
-            foreach (var tileType in tileTypes)
+            for (int i =0;i<tileTypes.Length;i++)
             {
-                tiles[tileType.GetHashCode()] = GetTagTile(tileType);
+                tiles[tileTypes[i].GetHashCode()] = GetTagTile(tileTypes[i]);
             }
 
             return tiles;
         }
 
         private static NativeArray<Vector3Int> _ls;
+        private static NativeArray<Vector3Int> _ls2;
 
         private static void TileChange(Vector3Int position, TileType tileType)
         {
             //Debug.Log(position);
-            var lsbl = TagCellToViewCell(position);
-            foreach (var i in lsbl)
+            TagCellToViewCell(position, ref _ls2);
+            for (int i =0 ;i<_ls2.Length;i++)
             {
                 var type = new TileTypeGroup();
                 //Debug.Log(i);
-                _ls = ViewCellToTagCell(i);
+                ViewCellToTagCell(_ls2[i],ref _ls);
                 for (int j = 0; j < 4; j++)
                 {
                     //Debug.Log($"{ls[j]} {GetTile(ls[j])}");
@@ -247,8 +295,7 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
 
                 //Debug.Log($"{type.LeftTop} {type.RightTop} {type.LeftBottom} {type.RightBottom} ");
                 if (_doubleTileViewConfig.ConfigData.TileObjectType == TileObjectType.Sprite)
-                    _viewGrid.SetTile(i + new Vector3Int(-1, -1, 0), DoubleTileToolTileGenerate.GetTileBase(type));
-                if (_ls.IsCreated) _ls.Dispose();
+                    _viewGrid.SetTile(new Vector3Int(_ls2[i].x-1, _ls2[i].y-1, _ls2[i].z), DoubleTileToolTileGenerate.GetTileBase(type));
             }
 
             //更改瓦片
@@ -256,8 +303,6 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
             {
                 _tagGrid.SetTile(position, GetTagTile(tileType));
             }
-
-            if (lsbl.IsCreated) lsbl.Dispose();
         }
 
         /// <summary>
@@ -273,14 +318,12 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
         /// </summary>
         /// <param name="cellPosition">上左,上右,下左,下右</param>
         /// <returns></returns>
-        public static NativeArray<Vector3Int> TagCellToViewCell(Vector3Int cellPosition)
+        public static void TagCellToViewCell(Vector3Int cellPosition,ref NativeArray<Vector3Int> nativeArray)
         {
-            NativeArray<Vector3Int> ls = new(4, Allocator.Temp);
-            ls[0] = cellPosition + new Vector3Int(0, 1, 0);
-            ls[1] = cellPosition + new Vector3Int(1, 1, 0);
-            ls[2] = cellPosition;
-            ls[3] = cellPosition + new Vector3Int(1, 0, 0);
-            return ls;
+            nativeArray[0] = new Vector3Int(cellPosition.x, cellPosition.y+1,cellPosition.z);
+            nativeArray[1] = new Vector3Int(cellPosition.x+1, cellPosition.y+1,cellPosition.z);
+            nativeArray[2] = cellPosition;
+            nativeArray[3] = new Vector3Int(cellPosition.x+1, cellPosition.y,cellPosition.z);
         }
 
         /// <summary>
@@ -288,14 +331,12 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
         /// </summary>
         /// <param name="cellPosition">上左,上右,下左,下右</param>
         /// <returns></returns>
-        public static NativeArray<Vector3Int> ViewCellToTagCell(Vector3Int cellPosition)
+        public static void ViewCellToTagCell(Vector3Int cellPosition,ref NativeArray<Vector3Int> nativeArray)
         {
-            NativeArray<Vector3Int> ls = new(4, Allocator.Temp);
-            ls[0] = cellPosition + new Vector3Int(-1, 0, 0);
-            ls[1] = cellPosition;
-            ls[2] = cellPosition + new Vector3Int(-1, -1, 0);
-            ls[3] = cellPosition + new Vector3Int(0, -1, 0);
-            return ls;
+            nativeArray[0] =  new Vector3Int(cellPosition.x-1, cellPosition.y, cellPosition.z);
+            nativeArray[1] = cellPosition;
+            nativeArray[2] = new Vector3Int(cellPosition.x-1, cellPosition.y-1, cellPosition.z);
+            nativeArray[3] = new Vector3Int(cellPosition.x, cellPosition.y-1, cellPosition.z);
         }
 
         /// <summary>
@@ -322,24 +363,31 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
         {
             Vector3Int cellPosition = _tagGrid.WorldToCell(position);
             _tagGrid.SetTile(cellPosition, null);
-            var lsbl = TagCellToViewCell(cellPosition);
-            foreach (var i in lsbl)
+            TagCellToViewCell(cellPosition,ref _ls2);
+            for (int i=0;i<_ls2.Length;i++)
             {
                 if (_doubleTileViewConfig.ConfigData.TileObjectType == TileObjectType.Sprite)
-                    _viewGrid.SetTile(i + new Vector3Int(-1, -1, 0), null);
+                    _viewGrid.SetTile(new Vector3Int(_ls2[i].x-1,_ls2[i].y -1,_ls2[i].z), null);
             }
-
-            if (lsbl.IsCreated) lsbl.Dispose();
+            
         }
 
         public static TileType GetTile(Vector3 position)
         {
-            return _tileData.GetValueOrDefault(_tagGrid.WorldToCell(position));
+            if (_tileData.TryGetValue(_tagGrid.WorldToCell(position), out var value))
+            {
+                return value;
+            }
+            return 0;
         }
 
         public static TileType GetTile(Vector3Int position)
         {
-            return _tileData.GetValueOrDefault(position);
+            if (_tileData.TryGetValue(position, out var value))
+            {
+                return value;
+            }
+            return 0;
         }
 
         /// <summary>
@@ -360,12 +408,111 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
             DoubleTileToolTileGenerate.Release();
             _tagTiles.Clear();
         }
+
+        public static void Dispose()
+        {
+            if(_ls.IsCreated) _ls.Dispose();
+            if(_ls2.IsCreated)_ls2.Dispose();
+        }
     }
 
+    public static class TileTypeExpand
+    {
+        private static readonly Dictionary<TileType, string> _stringPool = new();
+        /// <summary>
+        /// 使用字典缓存以减少ToString带来的内存开销
+        /// </summary>
+        /// <param name="tileType"></param>
+        /// <returns></returns>
+        public static string PoolToString(this TileType tileType)
+        {
+            if (_stringPool.TryGetValue(tileType, out var str))
+            {
+                return str;
+            }
+            _stringPool.Add(tileType, tileType.ToString());
+            return _stringPool[tileType];
+        }
+    }
+    
     public struct TileChangeData
     {
         public Vector3Int Position;
         public TileType OldTileType;
         public TileType NewTileType;
+    }
+
+    public struct TileKey : IEquatable<TileKey>
+    {
+        public readonly int x;
+        public readonly int y;
+        public readonly int z;
+    
+        public TileKey(int x, int y, int z)
+        {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+    
+        public TileKey(Vector3Int vec)
+        {
+            this.x = vec.x;
+            this.y = vec.y;
+            this.z = vec.z;
+        }
+    
+        // 隐式转换：TileKey → Vector3Int
+        public static implicit operator Vector3Int(TileKey key)
+        {
+            return new Vector3Int(key.x, key.y, key.z);
+        }
+    
+        // 隐式转换：Vector3Int → TileKey
+        public static implicit operator TileKey(Vector3Int vec)
+        {
+            return new TileKey(vec.x, vec.y, vec.z);
+        }
+    
+        // 显式转换（如果需要）
+        public Vector3Int ToVector3Int()
+        {
+            return new Vector3Int(x, y, z);
+        }
+    
+        // 直接比较，避免类型检查和装箱
+        public bool Equals(TileKey other)
+        {
+            return x == other.x && y == other.y && z == other.z;
+        }
+    
+        // 优化的GetHashCode
+        public override int GetHashCode()
+        {
+            // 使用素数减少哈希冲突
+            unchecked
+            {
+                int hash = 17;
+                hash = hash * 23 + x;
+                hash = hash * 23 + y;
+                hash = hash * 23 + z;
+                return hash;
+            }
+        }
+    
+        // 避免使用object.Equals
+        public override bool Equals(object obj) => false;
+    
+        // 重写ToString以便调试
+        public override string ToString()
+        {
+            return $"TileKey({x}, {y}, {z})";
+        }
+    
+        // 为了方便，添加一些常用属性
+        public int Magnitude => Mathf.Abs(x) + Mathf.Abs(y) + Mathf.Abs(z);
+    
+        public static TileKey zero => new TileKey(0, 0, 0);
+        public static TileKey one => new TileKey(1, 1, 1);
     }
 }

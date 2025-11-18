@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace EUFarmworker.Tool.MapLoadTool.Script.Data.NoiseConfig
 {
     /// <summary>
     /// 主要作用是描述噪声生成算法
     /// </summary>
-    public abstract class SONoiseConfigBase:ScriptableObjectEditorBase
+    public abstract class SONoiseConfigBase:ScriptableObjectEditorBase, IDisposable
     {
         internal int Send;
         /// <summary>
@@ -24,5 +25,6 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.NoiseConfig
         /// <param name="position">提供生成位置的信息</param>
         /// <returns></returns>
         public abstract float OnUse(Vector3 position);
+        public abstract void Dispose();
     }
 }

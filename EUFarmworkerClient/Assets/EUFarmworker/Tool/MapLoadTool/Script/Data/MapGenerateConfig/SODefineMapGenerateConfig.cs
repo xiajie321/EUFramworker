@@ -31,75 +31,93 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.MapGenerateConfig
         SOBlockLoadConfigBase _blockLoadConfig;
         public override void OnInit(SOBlockLoadConfigBase blockLoadConfig, SONoiseConfigBase noiseConfig)
         {
+            Dispose();//防止重新创建的时候容器没有被释放
             _noiseConfig = noiseConfig;
             _blockLoadConfig = blockLoadConfig;
+            int lsSj = _blockLoadConfig.GetSingleBlockSize();
+            int len = lsSj * lsSj;
+            GcInit(len);
+            NativeInit(len);
             blockLoadConfig.OnLoadBlockChangeEvent(LoadBlockChange);
             blockLoadConfig.OnUninstallBlockChangeEvent(UninstBlockChange);
             blockLoadConfig.Init();
         }
 
-        private NativeHashMap<Vector3Int, TileType> _lsLoadTiles;
+        private void NativeInit(int len)
+        {
+        }
+
+        private void GcInit(int len)
+        {
+            _lsKeys = new Vector3Int[len];
+            _lsValues = new TileType[len];
+            _lsUninstallTiles = new Vector3Int[len];
+        }
+        public override void Dispose()
+        {
+        }
+        
+        private Vector3Int[] _lsKeys;
+        private TileType[] _lsValues;
         private void LoadBlockChange(Vector3Int v)
         {
             if(_mapSize.x >=0 ||  _mapSize.y >= 0)
                 if(v.x > _mapSize.x/2 || v.x < -_mapSize.x/2 || v.y > _mapSize.y/2 || v.y < -_mapSize.y/2) return;
             float ls;
             int lsSj = _blockLoadConfig.GetSingleBlockSize();
-            int len = lsSj * lsSj;
-            _lsLoadTiles = new NativeHashMap<Vector3Int, TileType>(len, Allocator.Temp);
             Vector3Int lspos = v;
-            TileType lsType;
+            TileType lsType = 0;
+            int sum =0;
             for (int j = 0; j < lsSj; j++)
             {
                 for (int k = 0; k < lsSj; k++)
                 {
                     ls = _noiseConfig.OnUse(lspos);
-                    foreach (var i in _defineMapGenerateConfigDatas)
+                    for (int i =0;i<_defineMapGenerateConfigDatas.Count;i++)
                     {
-                        if (ls <= i.heigth)
+                        if (ls <= _defineMapGenerateConfigDatas[i].heigth)
                         {
-                            lspos = v + new Vector3Int(j, k, 0);
-                            if(_lsLoadTiles.ContainsKey(lspos)) break;
+                            lspos = new Vector3Int(v.x+j,v.y+ k, v.z);
                             //Debug.Log($"{ls} {i.tileType}");
-                            lsType = i.tileType;
-                            _lsLoadTiles.Add(lspos,lsType);
+                            
+                            lsType = _defineMapGenerateConfigDatas[i].tileType;
+                            _lsKeys[sum] = lspos;
+                            _lsValues[sum] = lsType;
+                            sum++;
                             break;
                         }
+                        else if (i>= _defineMapGenerateConfigDatas.Count - 1)
+                        {
+                            lspos = new Vector3Int(v.x+j, v.y+k, v.z);
+                            //Debug.Log($"{ls} {i.tileType}");
+                            lsType = 0;
+                            _lsKeys[sum] = lspos;
+                            _lsValues[sum] = lsType;
+                            sum++;
+                        }
                     }
-                    lspos = v + new Vector3Int(j, k, 0);
-                    if(_lsLoadTiles.ContainsKey(lspos)) continue;
-                    //Debug.Log($"{ls} {i.tileType}");
-                    lsType = 0;
-                    _lsLoadTiles.Add(lspos,lsType);
+    
                 }
             }
-
-            var lsKeys = _lsLoadTiles.GetKeyArray(Allocator.Temp);
-            var lsValues = _lsLoadTiles.GetValueArray(Allocator.Temp);
-            DoubleTileTool.Script.DoubleTileTool.SetTiles(lsKeys.AsValueEnumerable().ToArray(),lsValues.AsValueEnumerable().ToArray());
-            if(lsKeys.IsCreated) lsKeys.Dispose();
-            if(lsValues.IsCreated) lsValues.Dispose();
-            if(_lsLoadTiles.IsCreated) _lsLoadTiles.Dispose();
+            DoubleTileTool.Script.DoubleTileTool.SetTiles(_lsKeys,_lsValues);
         }
 
-        private NativeArray<Vector3Int> _lsUninstallTiles;
+        private Vector3Int[] _lsUninstallTiles;
         private void UninstBlockChange(Vector3Int v)
         {
             if(_mapSize.x >=0 ||  _mapSize.y >= 0)
                 if(v.x > _mapSize.x/2 || v.x < -_mapSize.x/2 || v.y > _mapSize.y/2 || v.y < -_mapSize.y/2) return;
             int lsSj = _blockLoadConfig.GetSingleBlockSize();
-            _lsUninstallTiles = new NativeArray<Vector3Int>(lsSj * lsSj, Allocator.Temp);
             int sum = 0;
             for (int i = 0; i < lsSj; i++)
             {
                 for (int j = 0; j < lsSj; j++)
                 {
-                    _lsUninstallTiles[sum]  = v + new Vector3Int(i, j, 0);
+                    _lsUninstallTiles[sum]  = new Vector3Int(v.x+i, v.y+j, v.z);
                     sum++;
                 }
             }
-            DoubleTileTool.Script.DoubleTileTool.UninstallTiles(_lsUninstallTiles.AsValueEnumerable().ToArray());
-            if(_lsUninstallTiles.IsCreated) _lsUninstallTiles.Dispose();
+            DoubleTileTool.Script.DoubleTileTool.UninstallTiles(_lsUninstallTiles);
         }
     }
     [Serializable]

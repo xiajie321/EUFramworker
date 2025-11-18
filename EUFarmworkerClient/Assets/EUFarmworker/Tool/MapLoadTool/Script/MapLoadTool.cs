@@ -30,7 +30,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script
             _mapLoadViewConfig.ConfigData.MapGenerateConfig.OnInit(_mapLoadViewConfig.ConfigData.BlockLoadConfig, _mapLoadViewConfig.ConfigData.NoiseConfig);
         }
         /// <summary>
-        /// 处于同一游戏场景并且需要重新载入的情况下使用该方法重载地图
+        /// 处于同一游戏场景并且需要重新载入的情况下使用该方法重载地图(需要手动补充)
         /// </summary>
         public static void Restart(SOMapGenerateConfigBase soMapGenerateConfigBase = null,SONoiseConfigBase soNoiseConfigBase = null)
         {
@@ -104,6 +104,12 @@ namespace EUFarmworker.Tool.MapLoadTool.Script
         /// </summary>
         public static void Release()
         {
+        }
+        public static void Dispose()
+        {
+            _mapLoadViewConfig.ConfigData.BlockLoadConfig.Dispose();
+            _mapLoadViewConfig.ConfigData.NoiseConfig.Dispose();
+            _mapLoadViewConfig.ConfigData.MapGenerateConfig.Dispose();
         }
     }
 }

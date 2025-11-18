@@ -9,6 +9,10 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
         [SerializeField]
         SODoubleTileViewConfig config;
         public SODoubleTileViewConfig Config =>config;
-        
+
+        private void OnDestroy()
+        {
+            DoubleTileTool.Dispose();
+        }
     }
 }

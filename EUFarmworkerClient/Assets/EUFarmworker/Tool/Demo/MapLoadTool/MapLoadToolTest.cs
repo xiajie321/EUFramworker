@@ -42,5 +42,6 @@ public class MapLoadToolTest : MonoBehaviour
     private void FixedUpdate()
     {
         MapLoadTool.LookPosition(LookGameObject.transform.position);
+        //Debug.Log(GC.GetTotalMemory(false)/(1024*1024));
     }
 }

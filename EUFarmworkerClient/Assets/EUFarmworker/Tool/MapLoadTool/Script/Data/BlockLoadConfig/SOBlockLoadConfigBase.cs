@@ -6,7 +6,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
     /// <summary>
     /// 主要作用是描述区块生成算法
     /// </summary>
-    public abstract class SOBlockLoadConfigBase:ScriptableObjectEditorBase
+    public abstract class SOBlockLoadConfigBase:ScriptableObjectEditorBase, IDisposable
     {
         //推荐优化方式,使用队列去限制每帧触发时最多加载与卸载的次数。
         internal Action<Vector3Int> _OnLoadBlockChangeEvent;
@@ -52,5 +52,6 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
         /// <param name="position">当前的位置</param>
         public abstract void OnMovePosition(Vector3 position);
 
+        public abstract void Dispose();
     }
 }

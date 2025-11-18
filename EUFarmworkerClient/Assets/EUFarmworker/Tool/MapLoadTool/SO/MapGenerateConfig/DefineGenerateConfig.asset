@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _mapSize: {x: -1, y: -1}
   _defineMapGenerateConfigDatas:
+  - heigth: 0.7
+    tileType: 1
+  - heigth: 0.5
+    tileType: 2
   - heigth: 0
     tileType: 0
-  - heigth: 0.3
-    tileType: 2
-  - heigth: 0.5
-    tileType: 1

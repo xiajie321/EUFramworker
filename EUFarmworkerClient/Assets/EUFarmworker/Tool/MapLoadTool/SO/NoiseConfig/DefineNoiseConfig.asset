@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c75689e0a042a5acda39127b2c450a, type: 3}
   m_Name: DefineNoiseConfig
   m_EditorClassIdentifier: 
-  _material: {fileID: 2100000, guid: 895352c6ce2442d49a9fcac2bf8a5075, type: 2}
   _send: 0
   _scale: 10

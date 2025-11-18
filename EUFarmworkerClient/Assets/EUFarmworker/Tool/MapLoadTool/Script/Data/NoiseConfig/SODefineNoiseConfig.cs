@@ -25,5 +25,9 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.NoiseConfig
         {
             return Mathf.PerlinNoise((position.x + _send) / _scale,(position.y + _send) /_scale);
         }
+
+        public override void Dispose()
+        {
+        }
     }
 }
