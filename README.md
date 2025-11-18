@@ -32,6 +32,8 @@
 
 - 引入HybridCLR热更。
 
+- 引入Fantasy框架。
+
 ## 引用
 
 - [LuBan][focus-creative-games/luban： luban是一个强大、易用、优雅、稳定的游戏配置解决方案。鲁班是一款功能强大、易用、优雅稳定的游戏配置方案。](https://github.com/focus-creative-games/luban)
@@ -49,3 +51,5 @@
 - [PrimeTween][KyryloKuzyk/PrimeTween：用于 Unity 的高性能、免分配补间库。在一行代码中创建动画、延迟和序列。](https://github.com/KyryloKuzyk/PrimeTween)
 
 - [UniTask][Cysharp/UniTask: Provides an efficient allocation free async/await integration for Unity.](https://github.com/Cysharp/UniTask)
+
+- [Fantasy] [qq362946/奇幻：C # 游戏框架，但不限于游戏。可用于非游戏业务开发](https://github.com/qq362946/Fantasy)
