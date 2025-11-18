@@ -20,15 +20,15 @@
 
 - 引入UniTask。
 
-## 正在进行的工作
-
 - 地图生成工具(区块生成)。
+
+## 正在进行的工作
 
 - 基于VFXGraph的伤害跳字工具。
 
 ## 计划
 
-- 引入YooAsset资源管理方案。
+- 引入YooAsset资源管理方案(替换Qf的ResKit)。
 
 - 引入HybridCLR热更。
 

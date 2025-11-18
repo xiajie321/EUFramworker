@@ -492,10 +492,9 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
             // 使用素数减少哈希冲突
             unchecked
             {
-                int hash = 17;
-                hash = hash * 23 + x;
-                hash = hash * 23 + y;
-                hash = hash * 23 + z;
+                int hash = x;
+                hash = (hash * 397) ^ y;
+                hash = (hash * 397) ^ z;
                 return hash;
             }
         }
