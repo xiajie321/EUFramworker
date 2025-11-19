@@ -20,21 +20,13 @@ namespace EUFarmworker.Tool.MapLoadTool.Script
         {
             if (root)
             {
-                Debug.LogError("[MapLoadTool] 重复初始化");
-                return;
+                Object.Destroy(root);
             }
             root = Object.Instantiate(Resources.Load<GameObject>("EUFarmworker/MapLoadTool/MapLoadTool"));
             _mapLoadViewConfig = root.GetComponent<MapLoadToolRunTime>().Config;
             if(soMapGenerateConfigBase) _mapLoadViewConfig.ConfigData.MapGenerateConfig = soMapGenerateConfigBase;
             if(soNoiseConfigBase) _mapLoadViewConfig.ConfigData.NoiseConfig = soNoiseConfigBase;
             _mapLoadViewConfig.ConfigData.MapGenerateConfig.OnInit(_mapLoadViewConfig.ConfigData.BlockLoadConfig, _mapLoadViewConfig.ConfigData.NoiseConfig);
-        }
-        /// <summary>
-        /// 处于同一游戏场景并且需要重新载入的情况下使用该方法重载地图(需要手动补充)
-        /// </summary>
-        public static void Restart(SOMapGenerateConfigBase soMapGenerateConfigBase = null,SONoiseConfigBase soNoiseConfigBase = null)
-        {
-            
         }
         
         /// <summary>

@@ -12,7 +12,7 @@ using Vector3 = UnityEngine.Vector3;
 namespace EUFarmworker.Tool.MapLoadTool.Script.Data.MapGenerateConfig
 {
     [CreateAssetMenu(fileName = "DefineGenerateConfig", menuName = "EUTool/MapLoad/GenerateConfig/DefineGenerateConfig")]
-    public class SODefineMapGenerateConfig:SOMapGenerateConfigBase
+    public class SODefineMapGenerateConfig:SOMapGenerateConfigBase//默认会自动初始化双瓦片系统
     {
         [SerializeField]
         private List<DefineMapGenerateConfigData> _defineMapGenerateConfigDatas =new();
@@ -32,6 +32,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.MapGenerateConfig
         public override void OnInit(SOBlockLoadConfigBase blockLoadConfig, SONoiseConfigBase noiseConfig)
         {
             Dispose();//防止重新创建的时候容器没有被释放
+            DoubleTileTool.Script.DoubleTileTool.Init();
             _noiseConfig = noiseConfig;
             _blockLoadConfig = blockLoadConfig;
             int lsSj = _blockLoadConfig.GetSingleBlockSize();

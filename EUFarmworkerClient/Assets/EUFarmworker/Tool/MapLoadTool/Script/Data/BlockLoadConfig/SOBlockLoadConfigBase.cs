@@ -9,7 +9,9 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
     public abstract class SOBlockLoadConfigBase:ScriptableObjectEditorBase, IDisposable
     {
         //推荐优化方式,使用队列去限制每帧触发时最多加载与卸载的次数。
+        [NonSerialized]
         internal Action<Vector3Int> _OnLoadBlockChangeEvent;
+        [NonSerialized]
         internal Action<Vector3Int> _OnUninstallBlockChangeEvent;
         /// <summary>
         /// 注册区块加载改变事件;注意,要使用具体方法而非匿名方法否则无法注销

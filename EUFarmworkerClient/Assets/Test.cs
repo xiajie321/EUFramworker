@@ -6,8 +6,6 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    [SerializeField]
-    SpriteRenderer _spriteRenderer;
     void Start()
     {
         DoubleTileTool.Init();
@@ -23,11 +21,6 @@ public class Test : MonoBehaviour
         DoubleTileTool.SetTile(c + new Vector3(-1,-1,0),TileType.瓦片0);
         DoubleTileTool.SetTile(c + new Vector3(1,-2,0),TileType.瓦片0);
         DoubleTileTool.SetTile(c + new Vector3(-1,1,0),TileType.瓦片0);
-        _spriteRenderer.sprite = DoubleTileToolTileGenerate.GetSprite(new TileTypeGroup()
-        {
-            LeftBottom = TileType.瓦片0,
-            RightTop  = TileType.瓦片0
-        },0);
     }
 
 }

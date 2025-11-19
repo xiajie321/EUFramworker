@@ -13,7 +13,6 @@ public class MapLoadToolTest : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = -1;
-        DoubleTileTool.Init();
         MapLoadTool.Init();
         //DoubleTileTool.SetTiles(new Vector3Int[] {new(0,0,0),new(1,0,0)},new TileType[] { TileType.瓦片0 , TileType.瓦片0});
         //DoubleTileTool.SetTile(new Vector3(0,1,0),TileType.瓦片0);
