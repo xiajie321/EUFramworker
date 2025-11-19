@@ -31,7 +31,6 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.MapGenerateConfig
         SOBlockLoadConfigBase _blockLoadConfig;
         public override void OnInit(SOBlockLoadConfigBase blockLoadConfig, SONoiseConfigBase noiseConfig)
         {
-            Dispose();//防止重新创建的时候容器没有被释放
             DoubleTileTool.Script.DoubleTileTool.Init();
             _noiseConfig = noiseConfig;
             _blockLoadConfig = blockLoadConfig;
@@ -39,9 +38,9 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.MapGenerateConfig
             int len = lsSj * lsSj;
             GcInit(len);
             NativeInit(len);
+            blockLoadConfig.Init();
             blockLoadConfig.RegisterLoadBlockChangeEvent(LoadBlockChange);
             blockLoadConfig.RegisterUninstallBlockChangeEvent(UninstBlockChange);
-            blockLoadConfig.Init();
         }
 
         private void NativeInit(int len)

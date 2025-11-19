@@ -20,7 +20,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script
         {
             if (root)
             {
-                Object.Destroy(root);
+                Object.DestroyImmediate(root);
             }
             root = Object.Instantiate(Resources.Load<GameObject>("EUFarmworker/MapLoadTool/MapLoadTool"));
             _mapLoadViewConfig = root.GetComponent<MapLoadToolRunTime>().Config;
@@ -52,7 +52,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script
         /// <param name="pos"></param>
         public static void LookPosition(Vector3 pos)
         {
-            _mapLoadViewConfig.ConfigData.BlockLoadConfig?.OnMovePosition(pos);
+            _mapLoadViewConfig.ConfigData?.BlockLoadConfig?.OnMovePosition(pos);
         }
 
         /// <summary>

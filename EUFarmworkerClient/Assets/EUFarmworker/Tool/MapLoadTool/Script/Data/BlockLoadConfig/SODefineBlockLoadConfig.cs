@@ -6,13 +6,13 @@ using UnityEngine;
 
 namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
 {
-    [CreateAssetMenu(fileName = "DefineBlockLoadConfig", menuName = "EUTool/MapLoad/BlockLoadConfig/DefineBlockLoadConfig")]
-    public class SODefineBlockLoadConfig:SOBlockLoadConfigBase
+    [CreateAssetMenu(fileName = "DefineBlockLoadConfig",
+        menuName = "EUTool/MapLoad/BlockLoadConfig/DefineBlockLoadConfig")]
+    public class SODefineBlockLoadConfig : SOBlockLoadConfigBase
     {
-        [SerializeField]
-        private int _singleBlockSize = 30;
-        [SerializeField]
-        private Vector3Int _lookBlockSize = new(3,3,0);
+        [SerializeField] private int _singleBlockSize = 30;
+        [SerializeField] private Vector3Int _lookBlockSize = new(3, 3, 0);
+
         public override void SetSingleBlockSize(int size)
         {
             _singleBlockSize = size;
@@ -33,54 +33,54 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
             return _lookBlockSize;
         }
 
-        [NonSerialized]
-        private Vector3Int _qkcenter;
-        [NonSerialized]
-        private bool isInit = false;
+        [NonSerialized] private Vector3Int _qkcenter;
+        [NonSerialized] private bool isInit = false;
+
         public override void OnMovePosition(Vector3 position)
         {
             var lsdata = new Vector3Int(
-                position.x>=0? (int)(position.x / _singleBlockSize):(int)(position.x / _singleBlockSize) -1, 
-                position.y>=0?(int)(position.y / _singleBlockSize) :(int)(position.y / _singleBlockSize) -1,
+                position.x >= 0 ? (int)(position.x / _singleBlockSize) : (int)(position.x / _singleBlockSize) - 1,
+                position.y >= 0 ? (int)(position.y / _singleBlockSize) : (int)(position.y / _singleBlockSize) - 1,
                 0);
-            var newcenter = new Vector3Int(lsdata.x * _singleBlockSize,lsdata.y * _singleBlockSize);//区块位置
+            var newcenter = new Vector3Int(lsdata.x * _singleBlockSize, lsdata.y * _singleBlockSize); //区块位置
+            if (!_uninstallQueue.IsCreated || !_loadQueue.IsCreated) return;
             if (!_runUninstall && _uninstallQueue.Count > 0)
             {
                 UpdateUninstall().Forget();
             }
+
             if (!_runLoad && _loadQueue.Count > 0)
             {
                 UpdateLoad().Forget();
             }
 
-            if(_qkcenter ==  newcenter && isInit) return;
+            if (_qkcenter == newcenter && isInit) return;
+            if(!isInit)isInit = true;
             UpdateBlock(newcenter);
             _qkcenter = newcenter;
         }
-        [NonSerialized]
-        private NativeHashSet<Vector3Int> _blocks;
-        [NonSerialized]
-        private NativeHashSet<Vector3Int> _lsBlocks;
-        [NonSerialized]
-        private NativeQueue<Vector3Int> _loadQueue;
-        [NonSerialized]
-        private NativeQueue<Vector3Int> _uninstallQueue;
+
+        [NonSerialized] private NativeHashSet<Vector3Int> _blocks;
+        [NonSerialized] private NativeHashSet<Vector3Int> _lsBlocks;
+        [NonSerialized] private NativeQueue<Vector3Int> _loadQueue;
+        [NonSerialized] private NativeQueue<Vector3Int> _uninstallQueue;
+
         private void UpdateBlock(Vector3Int newPosition)
         {
             _lsBlocks.Clear();
             int lsi = _lookBlockSize.x * 2 + 1;
             int lsj = _lookBlockSize.y * 2 + 1;
-    
+
             var currentPos = new Vector3Int(
                 newPosition.x + _lookBlockSize.x * _singleBlockSize,
                 newPosition.y + _lookBlockSize.y * _singleBlockSize,
                 0
             );
-    
+
             // 预计算减少循环内的运算
             int xStep = _singleBlockSize;
             int yStep = _singleBlockSize;
-    
+
             for (int i = 0; i < lsi; i++)
             {
                 var rowPos = currentPos;
@@ -89,8 +89,10 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
                     _lsBlocks.Add(rowPos);
                     rowPos.y -= yStep;
                 }
+
                 currentPos.x -= xStep;
             }
+
             // 使用更高效的集合差异计算
             foreach (var existingBlock in _blocks)
             {
@@ -99,7 +101,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
                     _uninstallQueue.Enqueue(existingBlock);
                 }
             }
-    
+
             foreach (var newBlock in _lsBlocks)
             {
                 if (!_blocks.Contains(newBlock))
@@ -108,8 +110,9 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
                 }
             }
         }
-        [NonSerialized]
-        bool _runLoad = false;
+
+        [NonSerialized] bool _runLoad = false;
+
         private async UniTaskVoid UpdateLoad()
         {
             _runLoad = true;
@@ -118,10 +121,12 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
                 LoadBlock(_loadQueue.Dequeue());
                 await UniTask.DelayFrame(10);
             }
+
             _runLoad = false;
         }
-        [NonSerialized]
-        bool _runUninstall = false;
+
+        [NonSerialized] bool _runUninstall = false;
+
         private async UniTaskVoid UpdateUninstall()
         {
             _runUninstall = true;
@@ -130,8 +135,10 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
                 UninstallBlock(_uninstallQueue.Dequeue());
                 await UniTask.DelayFrame(10);
             }
+
             _runUninstall = false;
         }
+
         private void LoadBlock(Vector3Int position)
         {
             if (!_blocks.Contains(position))
@@ -144,29 +151,31 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.BlockLoadConfig
         private void UninstallBlock(Vector3Int position)
         {
             if (_blocks.Contains(position))
-            { 
+            {
                 _OnUninstallBlockChangeEvent?.Invoke(position);
                 _blocks.Remove(position);
             }
         }
+
         public override void Init(Vector3 position = default)
         {
-            Dispose();
-            _blocks = new(100,Allocator.Persistent);
-            _lsBlocks = new(100,Allocator.Persistent);
+            _blocks = new(100, Allocator.Persistent);
+            _lsBlocks = new(100, Allocator.Persistent);
             _loadQueue = new(Allocator.Persistent);
             _uninstallQueue = new(Allocator.Persistent);
-            OnMovePosition(position);
-            isInit = true;
         }
 
         public override void Dispose()
         {
-            if(_blocks.IsCreated) _blocks.Dispose();
-            if(_lsBlocks.IsCreated) _lsBlocks.Dispose();
-            if(_loadQueue.IsCreated) _loadQueue.Dispose();
-            if(_uninstallQueue.IsCreated) _uninstallQueue.Dispose();
+            if (_blocks.IsCreated) _blocks.Dispose();
+            if (_lsBlocks.IsCreated) _lsBlocks.Dispose();
+            if (_loadQueue.IsCreated) _loadQueue.Dispose();
+            if (_uninstallQueue.IsCreated) _uninstallQueue.Dispose();
+            if(isInit) isInit = false;
+            _OnLoadBlockChangeEvent = null;
+            _OnUninstallBlockChangeEvent = null;
         }
+
         private void OnDestroy()
         {
             Dispose();

@@ -26,11 +26,9 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
         public static void Init() //初始化瓦片工具
         {
             Clear();
-            Dispose();//防止未释放
             if (root)
             {
-                Debug.LogWarning("[DoubleTileTool] 重复初始化!");
-                return;
+                Object.DestroyImmediate(root);
             }
             NativeInit();
             root = Object.Instantiate(Resources.Load<GameObject>("EUFarmworker/DoubleTileTool/DoubleTileTool"));
@@ -425,6 +423,7 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
         {
             if(_ls.IsCreated) _ls.Dispose();
             if(_ls2.IsCreated)_ls2.Dispose();
+            _onTileChangeEvent =  null;
         }
     }
 
