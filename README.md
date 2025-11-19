@@ -28,7 +28,7 @@
 
 ## 计划
 
-- 引入YooAsset资源管理方案(替换Qf的ResKit)。
+- 引入YooAsset资源管理方案(替换Qf的ResKit)。<-搁置
 
 - 引入HybridCLR热更。
 
