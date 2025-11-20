@@ -1,58 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using EUFarmworker.Tool.DoubleTileTool.Script.Generate;
-using UnityEditor;
+using PrimeTween;
 using UnityEngine;
-using UnityEngine.Serialization;
+using UnityEngine.VFX;
 
-namespace EUFarmworker.Tool.DoubleTileTool.Script.Data
+namespace EUFarmworker.Tool.DamageNumTool.Script.Data.DamageNumConfig
 {
-    [CreateAssetMenu(fileName = "DoubleTileConfigData", menuName = "EUTool/DoubleTile/DoubleTileConfigData")]
+    [CreateAssetMenu(fileName = "DamageNumConfigData", menuName = "EUTool/DamageNum/DamageNumConfigData")]
     [Serializable]
-    public class SODoubleTileScriptableObject : ScriptableObjectEditorBase
+    public class SODamageNumScriptableObject:ScriptableObjectEditorBase,IDisposable
     {
-        public string ScriptPath = "Assets/EUFarmworker/Tool/DoubleTileTool/Script/Generate"; //脚本生成的路径
-        public string TilePath = "Assets/Resources"; //瓦片生成的路径
-        public bool IsRuntimeGenerate = true;//运行时生成
-        public float FrameRate = 1;//播放速度
-        public int Frame;//帧数量
-        public TileObjectType TileObjectType = TileObjectType.Sprite;
-        public List<string> TileNames = new(); //瓦片名称设置
-        public List<DoubleTileData> TileDatas = new(); //瓦片数据
-        internal void Generate()
-        {
-            EnumGenerate();
-            if(IsRuntimeGenerate) return;//运行时执行部分不会进行生成
-            //TileResourceGenerate();
-        }
-
-        internal void TileResourceGenerate()//生成瓦片
-        {
-            DoubleTileToolTileGenerate.Init(this);
-            string lsname = "";
-            foreach (var i in Enum.GetValues(typeof(TileType)))
-            {
-                foreach (var j in Enum.GetValues(typeof(TileType)))
-                {
-                    foreach (var k in Enum.GetValues(typeof(TileType)))
-                    {
-                        foreach (var e in Enum.GetValues(typeof(TileType)))
-                        {
-                            lsname = $"{i}{j}{k}{e}";
-                            
-                        }
-                    }
-                }
-            }
-        }
-        #region 枚举生成
         #if UNITY_EDITOR
-        private string _enumName = "TileType";
-        private string _namespaceName = "EUFarmworker.Tool.DoubleTileTool.Script.Generate";
-        private string _fileName = "TileType.cs";
+        public string ScriptPath;
+        public List<DamageGrData> Names = new()
+        {
+            new()
+            {
+                Color = Color.red,
+                Name = "Red",
+            }
+        };
+        #endif
+        public int numCount = 1000;//每帧最大显示数量
+        public float life = 1.5f;
+        public float bounds = 64;
+        public List<Color> colors = new()
+        {
+            Color.red,
+            Color.green,
+        }; //飘字颜色
+        public Texture2DArray texture;//纹理
+        public AnimationCurve alphaCurve;//动画
+        public AnimationCurve posXCurve;
+        public AnimationCurve posYCurve;
+        public AnimationCurve scaleCurve;
 
-        private void EnumGenerate()
+        public void Init()
+        {
+            
+        }
+        public void Dispose()
+        {
+            
+        }
+        #if UNITY_EDITOR
+        //枚举生成
+        [NonSerialized]
+        private string _enumName = "DamageNumColor";
+        [NonSerialized]
+        private string _namespaceName = "EUFarmworker.Tool.DamageNumTool.Script.Generate";
+        [NonSerialized]
+        private string _fileName = "DamageNumColor.cs";
+
+        public void EnumGenerate()
         {
             if (string.IsNullOrEmpty(ScriptPath))
             {
@@ -86,9 +87,9 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script.Data
         {
             // 生成枚举值部分
             string enumValuesCode = "";
-            for (int i = 0; i < TileNames.Count; i++)
+            for (int i = 0; i < Names.Count; i++)
             {
-                string valueName = TileNames[i];
+                string valueName = Names[i].Name;
                 // 验证枚举值名称是否合法
                 if (string.IsNullOrEmpty(valueName))
                 {
@@ -111,7 +112,7 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script.Data
                 enumValuesCode += $"    {valueName}";
 
                 // 最后一个值不加逗号
-                if (i < TileNames.Count - 1)
+                if (i < Names.Count - 1)
                 {
                     enumValuesCode += ",\n";
                 }
@@ -130,8 +131,12 @@ namespace {_namespaceName}
 
             return code;
         }
+        [Serializable]
+        public class DamageGrData
+        {
+            public string Name;
+            public Color Color;
+        }
         #endif
-        #endregion
-
     }
 }

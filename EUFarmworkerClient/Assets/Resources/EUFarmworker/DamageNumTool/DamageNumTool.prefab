@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 6949917972305348040}
   - component: {fileID: 4998485813969934927}
   - component: {fileID: 2595955526358048193}
+  - component: {fileID: 7486671812262705550}
   m_Layer: 0
-  m_Name: DamageNumPlusVFXPrefab
+  m_Name: DamageNumTool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41,7 +42,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 680936358711581709}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 56097ae1a03658a46a7090f17ad0cf87, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: 8669a04f38a15df4c93eea6ae1c7fff7, type: 3}
   m_InitialEventName: OnPlay
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
@@ -60,7 +61,10 @@ VisualEffect:
     m_Uint:
       m_Array: []
     m_Int:
-      m_Array: []
+      m_Array:
+      - m_Value: 1
+        m_Name: Count
+        m_Overridden: 0
     m_Matrix4x4f:
       m_Array: []
     m_AnimationCurve:
@@ -69,7 +73,7 @@ VisualEffect:
       m_Array: []
     m_NamedObject:
       m_Array:
-      - m_Value: {fileID: 2800000, guid: c0174ef7478d03543845df4c99d637f5, type: 3}
+      - m_Value: {fileID: 18700000, guid: 03ef328b622983a43a25043bcaa08602, type: 3}
         m_Name: MainTexture
         m_Overridden: 1
     m_Bool:
@@ -114,3 +118,17 @@ VFXRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 10
+--- !u!114 &7486671812262705550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680936358711581709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7e1ee491eb541ce830eb75fb18f686f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: 0b52129c15ccf4e44b2270d3f6d8e71b, type: 2}
+  vfx: {fileID: 4998485813969934927}

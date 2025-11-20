@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using EUFarmworker.Tool.DoubleTileTool.Script;
 using EUFarmworker.Tool.DoubleTileTool.Script.Generate;
 using EUFarmworker.Tool.MapLoadTool.Script;
-using QFramework;
 using UnityEngine;
 
 public class MapLoadToolTest : MonoBehaviour
@@ -15,7 +14,6 @@ public class MapLoadToolTest : MonoBehaviour
     {
         Application.targetFrameRate = -1;
         MapLoadTool.Init();
-        ActionKit.Delay(3, ()=>MapLoadTool.Init()).Start(this);
         //DoubleTileTool.SetTiles(new Vector3Int[] {new(0,0,0),new(1,0,0)},new TileType[] { TileType.瓦片0 , TileType.瓦片0});
         //DoubleTileTool.SetTile(new Vector3(0,1,0),TileType.瓦片0);
     }
