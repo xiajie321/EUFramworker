@@ -4,6 +4,7 @@ namespace EUFarmworker.Tool.DamageNumTool.Script.Generate
 {
     public enum DamageNumColor
     {
-    Red
+    Red,
+    Green
     }
 }

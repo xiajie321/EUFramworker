@@ -19,6 +19,11 @@ namespace EUFarmworker.Tool.DamageNumTool.Script.Data.DamageNumConfig
             {
                 Color = Color.red,
                 Name = "Red",
+            },
+            new()
+            {
+                Color = Color.green,
+                Name = "Green",
             }
         };
         #endif

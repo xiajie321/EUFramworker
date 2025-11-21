@@ -16,6 +16,8 @@ MonoBehaviour:
   Names:
   - Name: Red
     Color: {r: 1, g: 0, b: 0, a: 1}
+  - Name: Green
+    Color: {r: 0, g: 1, b: 0, a: 1}
   numCount: 1000
   life: 1.5
   bounds: 64

@@ -220,6 +220,12 @@ public class DamageNumToolEditor : EditorWindow
     {
         ViewConfig.Save();
         if(!ViewConfig.ConfigData) return;
+        var ls = new List<Color>();
+        foreach (var i in ViewConfig.ConfigData.Names)
+        {
+            ls.Add(i.Color);
+        }
+        ViewConfig.ConfigData.colors = ls;
         ViewConfig.ConfigData.Save();
         ViewConfig.ConfigData.EnumGenerate();
     }
