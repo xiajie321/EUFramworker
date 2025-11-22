@@ -16,7 +16,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script
         /// </summary>
         /// <param name="soMapGenerateConfigBase">为空表示地图生成规则为地图默认</param>
         /// <param name="soNoiseConfigBase">为空表示噪声规则为地图默认</param>
-        public static void Init(SOMapGenerateConfigBase soMapGenerateConfigBase = null,SONoiseConfigBase soNoiseConfigBase = null)
+        public static void Init(int seed = 0,SOMapGenerateConfigBase soMapGenerateConfigBase = null,SONoiseConfigBase soNoiseConfigBase = null)
         {
             if (root)
             {
@@ -26,6 +26,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script
             _mapLoadViewConfig = root.GetComponent<MapLoadToolRunTime>().Config;
             if(soMapGenerateConfigBase) _mapLoadViewConfig.ConfigData.MapGenerateConfig = soMapGenerateConfigBase;
             if(soNoiseConfigBase) _mapLoadViewConfig.ConfigData.NoiseConfig = soNoiseConfigBase;
+            SetSend(seed);
             _mapLoadViewConfig.ConfigData.MapGenerateConfig.OnInit(_mapLoadViewConfig.ConfigData.BlockLoadConfig, _mapLoadViewConfig.ConfigData.NoiseConfig);
         }
         
@@ -104,7 +105,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script
         /// 设置种子
         /// </summary>
         /// <param name="value"></param>
-        public static void SetSend(int value)
+        private static void SetSend(int value)
         {
             _mapLoadViewConfig.ConfigData.NoiseConfig?.SetSend(value);
         }
