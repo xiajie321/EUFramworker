@@ -15,8 +15,10 @@ namespace EUFarmworker.Tool.DoubleTileTool.Script
     {
         private static Dictionary<TileKey, TileType> _tileData = new();
         private static event Action<TileChangeData> _onTileChangeEvent;
-        public static Tilemap _tagGrid;
-        public static Tilemap _viewGrid;
+        private static Tilemap _tagGrid;
+        private static Tilemap _viewGrid;
+        public static Tilemap TileGrid => _tagGrid;
+        public static Tilemap ViewGrid => _viewGrid;
         static bool _showTagGrid;
         static SODoubleTileViewConfig _doubleTileViewConfig;
         private static GameObject root;

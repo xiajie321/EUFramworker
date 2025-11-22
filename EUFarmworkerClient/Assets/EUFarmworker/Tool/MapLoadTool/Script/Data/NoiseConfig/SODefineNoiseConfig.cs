@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.Mathematics;
+using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace EUFarmworker.Tool.MapLoadTool.Script.Data.NoiseConfig
@@ -23,7 +24,7 @@ namespace EUFarmworker.Tool.MapLoadTool.Script.Data.NoiseConfig
 
         public override float OnUse(Vector3 position)
         {
-            return Mathf.PerlinNoise((position.x + _send) / _scale,(position.y + _send) /_scale);
+            return noise.snoise(new float2((position.x + _send) / _scale,(position.y + _send) /_scale));
         }
 
         public override void Dispose()

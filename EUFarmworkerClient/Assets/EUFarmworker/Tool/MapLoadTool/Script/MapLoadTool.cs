@@ -63,6 +63,15 @@ namespace EUFarmworker.Tool.MapLoadTool.Script
         {
             _mapLoadViewConfig.ConfigData.BlockLoadConfig?.SetLookBlockSize(size);
         }
+        
+        /// <summary>
+        /// 获取区块的显示范围
+        /// </summary>
+        /// <returns></returns>
+        public static Vector3Int GetLookBlockSize()
+        {
+            return _mapLoadViewConfig.ConfigData.BlockLoadConfig.GetLookBlockSize();
+        }
 
         /// <summary>
         /// 单个区块的大小
@@ -71,6 +80,15 @@ namespace EUFarmworker.Tool.MapLoadTool.Script
         public static void SetSingleBlockSize(int size)
         {
             _mapLoadViewConfig.ConfigData.BlockLoadConfig?.SetSingleBlockSize(size);
+        }
+        
+        /// <summary>
+        /// 获取单个区块的大小
+        /// </summary>
+        /// <returns></returns>
+        public static int GetSingleBlockSize()
+        {
+            return _mapLoadViewConfig.ConfigData.BlockLoadConfig.GetSingleBlockSize();
         }
 
         /// <summary>
